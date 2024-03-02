@@ -1,28 +1,90 @@
 package tp4.gl;
 
+
 public class Piece {
-    //attribut de Piece
 
-    private int ref;
-    private String nom;
-    private int quntite;
-    private int qantiteStock;
-    private double prix;
+  // attributes
+  private int ref;
+  private String nom;
+  private int quantite;
+  private static int QuantiteStock;
+  private double prix;
 
-    //methode de Piece
-    public boolean isDispo(String nom) {
-        if(this.qantiteStock == 0){
-            return false ;
-        }else{
-            return true;
-        }
+  // constructor
+  public Piece(int ref, String nom, int quantite, int quantiteStock, double prix) {
+    this.ref = ref;
+    this.nom = nom;
+    this.quantite = quantite;
+    Piece.QuantiteStock = quantiteStock;
+    this.prix = prix;
+  }
+
+  // methods
+
+  // Check if a piece with a specific name is available
+  public boolean isDispo(String nom) {
+    return this.nom.equals(nom) && quantite > 0;
+  }
+
+  // Update stock quantity
+  public void entrerStock(int quantite) {
+    if (quantite > 0) {
+      Piece.QuantiteStock += quantite;
+    } else {
+      System.out.println("Invalid quantity. Please enter a positive value.");
+    }
+  }
+
+  // Calculate the total price of a piece
+  public double calculerMontantPiece() {
+    return quantite * prix;
+  }
+
+    //getteur and setteur
+    public int getRef() {
+        return ref;
     }
 
-    public void entrerStock(int quantite) {
-        this.qantiteStock += quantite;
+    public void setRef(int ref) {
+        this.ref = ref;
     }
 
-    public double calculerMontantPièce() {
-        return prix*quntite;
+    public String getNom() {
+        return nom;
     }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public int getQuantite() {
+        return quantite;
+    }
+
+    public void setQuantite(int quantite) {
+        this.quantite = quantite;
+    }
+
+    public int getQuantiteStock() {
+        return QuantiteStock;
+    }
+
+    public void setQuantiteStock(int quantiteStock) {
+      Piece.QuantiteStock = quantiteStock;
+    }
+
+    public double getPrix() {
+        return prix;
+    }
+
+    public void setPrix(double prix) {
+        this.prix = prix;
+    }
+
+    @Override
+    public String toString() {
+        return "Piece [ref=" + ref + ", nom=" + nom + ", quantite=" + quantite + ", quantiteStock=" + Piece.QuantiteStock
+                + ", prix=" + prix + "]";
+    }
+
 }
