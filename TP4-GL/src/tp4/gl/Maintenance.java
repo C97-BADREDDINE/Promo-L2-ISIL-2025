@@ -9,17 +9,17 @@ public class Maintenance {
     private Date dateMain;
     private int nbheure;
     private String travaux;
-    private List<Piece> pieces;
+    private List<Piece> listePieceRep;
 
     public Maintenance() {
-        pieces = new ArrayList<>();
+        listePieceRep = new ArrayList<>();
     }
 
     public Maintenance(Date dateMain, int nbheure, String travaux) {
         this.dateMain = dateMain;
         this.nbheure = nbheure;
         this.travaux = travaux;
-        pieces = new ArrayList<>();
+        listePieceRep = new ArrayList<>();
     }
 
     public Date getDateMain() {
@@ -47,25 +47,25 @@ public class Maintenance {
     }
     
     public List<Piece> getPieceMainList() {
-        return pieces;
+        return listePieceRep;
     }
 
     public void setPieceMainList(List<Piece> pieceMainList) {
-        this.pieces = pieceMainList;
+        this.listePieceRep = pieceMainList;
     }
     
 
     
     public void ajouterPiece(int ref, String nom, int quntite, double prix) {
-        pieces.add(new Piece(ref, nom, quntite, quntite, prix));
+        listePieceRep.add(new Piece(ref, nom, quntite, quntite, prix));
     }
 
     public void ajouterPiece(Piece p){
-        pieces.add(p);
+        listePieceRep.add(p);
     }
     
     public void modifierPiece(int ref, String nom, int quntite, double prix){
-        for (Piece piece : pieces) {
+        for (Piece piece : listePieceRep) {
             if(piece.getRef() == ref){
                 piece.setNom(nom);
                 piece.setQuantite(quntite);
@@ -75,9 +75,9 @@ public class Maintenance {
     }
     
     public void supprimerPiece(int ref){
-        for (Piece piece : pieces) {
+        for (Piece piece : listePieceRep) {
             if(piece.getRef() == ref){
-                pieces.remove(piece);
+                listePieceRep.remove(piece);
             }
         }
     }
@@ -85,11 +85,11 @@ public class Maintenance {
     
     @Override
     public String toString() {
-        return "Maintenance [dateMain=" + getDateMain() + ", nbheure=" + getNbheure() + ", travaux=" + getTravaux() + "]\n";
+        return "Maintenance \n dateMain=" + getDateMain() + "\t nbheure= " + getNbheure() + "\t travaux= " + getTravaux() + "\n";
     }
 
     public void afficherListPieces(){
-        for (Piece piece : pieces) {
+        for (Piece piece : listePieceRep) {
             System.out.println(piece.toString());
         }
     }

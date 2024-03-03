@@ -8,56 +8,60 @@ import java.util.Scanner;
 public class Planning {
 
     private int numP = 0;
-    private List<Maintenance> maintenance;
+    private List<Maintenance> listeMaintenance;
         
     
 
     public Planning() {
-        maintenance = new ArrayList<>();
+        listeMaintenance = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
         System.out.println("Entrez le numero de planning : ");
-        numP = sc.nextInt();
+        setNumP(sc.nextInt());
+        sc.close();        
     }
 
     public Planning(int numP) {
         this.numP = numP;
-        maintenance = new ArrayList<>();
+        listeMaintenance = new ArrayList<>();
     }
 
     public void ajouterMaint(Date dateMaint, int nbHeure, String travaux) {
-        maintenance.add( new Maintenance(dateMaint,nbHeure,travaux));
+        listeMaintenance.add( new Maintenance(dateMaint,nbHeure,travaux));
     }
     
     public void modifierMaint(Date dateMaint,int nbHeure, String travaux){
-        for (Maintenance maint : maintenance) {
-            if(maint.getDateMain().equals(dateMaint)){
-                Scanner sc = new Scanner(System.in);
-                System.out.println("Entrez le nouveau nombre d'heure : ");
-                nbHeure = sc.nextInt();
-                System.out.println("Entrez le nouveau travaux : ");
-                travaux = sc.next();
-                maint.setNbheure(nbHeure);
-                maint.setTravaux(travaux);
-                
-            }
+        for (Maintenance maint : listeMaintenance) {
+           if(maint.getDateMain().equals(dateMaint)){
+            maint.setNbheure(nbHeure);
+            maint.setTravaux(travaux);
+           }
         }
     }
 
     public int getNumP() {
         return numP;
     }
+
+    public void setNumP(int numP){
+        this.numP=numP;
+    }
+
+    public List<Maintenance> getMainList() {
+        return listeMaintenance;
+    }
     
     public void supprimerMaint(Date dateMaint){
-        for (Maintenance maint : maintenance) {
+        for (Maintenance maint : listeMaintenance) {
             if(maint.getDateMain().equals(dateMaint)){
-                maintenance.remove(maint);
+                listeMaintenance.remove(maint);
+                break;
             }
         }        
     }
 
     @Override
     public String toString() {
-        return "Planning{" + "numP=" + getNumP() + " " + maintenance + '}'+ "\n";
+        return "Planning:\n" + "\t numP =" + getNumP() + "\t" + listeMaintenance + "\n";
     }
     
     public void afficherListMaint(){

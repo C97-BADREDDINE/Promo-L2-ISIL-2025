@@ -83,8 +83,8 @@ public class Piece {
 
     @Override
     public String toString() {
-        return "Piece [ref=" + ref + ", nom=" + nom + ", quantite=" + quantite + ", quantiteStock=" + Piece.QuantiteStock
-                + ", prix=" + prix + "]";
+        return "Piece \n ref= " + ref + "\t nom: " + nom + "\t quantite: " + quantite + "\t quantiteStock=" + Piece.QuantiteStock
+                + "\t prix=" + prix + "";
     }
 
 }
