@@ -11,9 +11,63 @@
         }
 
         body {
-            background-color: Gray;
+            margin-top: 100px;
+            margin-left: 70px;
+            background-color: lightgray;
             color: darkblue;
         }
+
+        section {
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px 0 darkblue;
+            border-bottom: 4px solid green;
+        }
+
+        section h2 {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: rgb(120, 24, 121);
+        }
+
+       /* section p {
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            color: darkblue;
+        }*/
+        .personal_data {
+            display: inline-block;
+            width: 30%;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12px;
+            color: darkblue;
+            font-weight: bold;
+            text-align: left;
+        }
+
+       section input {
+            margin-top: 10px;
+            display: inline-block;
+            width: 30%;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid darkblue;
+            font-size: 12px;
+            color: darkblue;
+            background-color: white;
+        }
+
+        #Email,#email {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-size: 10px;
+            color: darkblue;
+            font-weight: bold;
+        }
+        
     </style>
 </head>
 
@@ -22,13 +76,13 @@
     <h1>My beginnings with Web Programming</h1>
     <section id="S1" title="Informations Personnelles du Candidat ">
         <h2>Informations Personnelles du Candidat</h2>
-        <p>Nom : <input type="text" name="nom" id="nom" required></p>
-        <p>Prénom : <input type="text" name="prenom" id="prenom" required></p>
-        <p>Date de naissance : <input type="date" name="dateNaissance" id="dateNaissance" required></p>
-        <p>Adresse : <input type="text" name="adresse" id="adresse" required></p>
-        <p>Adresse Email : <input type="email" name="email" id="email" required></p>
-        <p>Téléphone : <input type="number" name="telephone" id="telephone" required></p>
-        <p>Situation Familiale : <input type="text" name="Situation Familiale"></p>
+        <p><div class="personal_data">Nom :</div> <input type="text" name="nom" id="nom" required></p>
+        <p><div class="personal_data">Prénom :</div> <input type="text" name="prenom" id="prenom" required></p>
+        <p><div class="personal_data">Date de naissance :</div> <input type="date" name="dateNaissance" id="dateNaissance" required></p>
+        <p><div class="personal_data">Adresse :</div> <input type="text" name="adresse" id="adresse" required></p>
+        <p><div class="personal_data" id="Email">Adresse Email :</div> <input type="email" name="email" id="email" required></p>
+        <p><div class="personal_data">Téléphone :</div> <input type="number" name="telephone" id="telephone" required></p>
+        <p><div class="personal_data">Situation Familiale :</div> <input type="text" name="Situation Familiale"></p>
     </section>
 
 </body>
