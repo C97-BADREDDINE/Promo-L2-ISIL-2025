@@ -1,0 +1,3 @@
+public enum Specialite {
+    ELECTRONIQUE,INFORMATIQUE,MECANIQUE, AUCUNE
+}
