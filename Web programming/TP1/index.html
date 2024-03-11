@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My beginnings with Web Programming</title>
     <style>
-     h1 {
+
+        h1 {
             text-align: center;
         }
 
@@ -15,10 +16,14 @@
             margin-left: 70px;
         }
 
+
         section {
             margin-top: 10%;
             margin-left: auto;
             margin-right: auto;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            color: darkblue;
             width: 50%;
             background-color: white;
             padding: 20px;
@@ -38,6 +43,7 @@
             font-weight: bold;
             color: darkblue;
         }
+
         .personal_data {
             display: inline-block;
             width: 30%;
@@ -48,7 +54,7 @@
             text-align: left;
         }
 
-       section input {
+        #S1 input {
             margin-top: 10px;
             display: inline-block;
             width: 30%;
@@ -60,28 +66,266 @@
             background-color: white;
         }
 
-        #Email,#email {
+        #email {
             font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
             font-size: 10pt;
             color: darkblue;
             font-weight: bold;
         }
-        
+
+        #S2 ol {
+            list-style-type: decimal;
+        }
+
+        #S2 ol li {
+            margin-top: 10px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        #S3 ul li {
+            margin-top: 10px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        #S4 pre {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12pt;
+            color: white;
+            background-color: black;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px 0 darkblue;
+            
+            
+        }
+
+        #S4 span {
+            color:red;
+        }
+
+        #S4 .message {
+            color: green;
+        }
+
+        #formule_math {
+            margin-top: 80px;
+            margin-bottom: 100px;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 24pt;
+            color: darkblue;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .footer {
+            margin-top: 100px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 12pt;
+            color: darkblue;
+            font-weight: bold;
+        }
+
+        .footer a {
+            text-decoration: none;
+            color: darkblue;
+        }
+
+        .nav-list {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            width: 150px;
+            margin-top: -100px;
+            padding: 0;
+            list-style-type: none;
+            background-color: lightgray;
+            border: 1px solid darkblue;
+            border-radius: 10px;
+            box-shadow: 0 0 10px 0 darkblue; 
+        }
+
+        .nav-list ol {
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .nav-list ol li {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .nav-list ol li a {
+            text-decoration: none;
+            color: darkblue;
+            font-weight: bold;
+        }
+
+        .nav-list ol li a:hover {
+            color: red;
+        }
     </style>
 </head>
 
-<body vlink="pink" link="purple" alink="yellow" text="darkblue" bgcolor="gray">
+<body vlink="pink" link="purple" alink="yellow" text="darkblue" bgcolor="lightgray">
 
+    <div class="nav-list">
+        <ol>
+            <li><a href="#S1">Section 1</a></li>
+            <li><a href="#S2">Section 2</a></li>
+            <li><a href="#S3">Section 3</a></li>
+            <li><a href="#S4">Section 4</a></li>
+            <li><a href="#S5">Section 5</a></li>
+        </ol>
+    </div>
+    <!-- debut Sectione 1 -->
     <section id="S1" title="Informations Personnelles du Candidat ">
         <h2>Informations Personnelles du Candidat</h2>
-        <p><div class="personal_data">Nom :</div> <input type="text" name="nom" id="nom" required></p>
-        <p><div class="personal_data">Prénom :</div> <input type="text" name="prenom" id="prenom" required></p>
-        <p><div class="personal_data">Date de naissance :</div> <input type="date" name="dateNaissance" id="dateNaissance" required></p>
-        <p><div class="personal_data">Adresse :</div> <input type="text" name="adresse" id="adresse" required></p>
-        <p><div class="personal_data" id="Email">Adresse Email :</div> <input type="email" name="email" id="email" required></p>
-        <p><div class="personal_data">Téléphone :</div> <input type="number" name="telephone" id="telephone" required></p>
-        <p><div class="personal_data">Situation Familiale :</div> <input type="text" name="Situation Familiale"></p>
+        <p>
+        <div class="personal_data">Nom :</div> <input type="text" name="nom" id="nom" required></p>
+        <p>
+        <div class="personal_data">Prénom :</div> <input type="text" name="prenom" id="prenom" required></p>
+        <p>
+        <div class="personal_data">Date de naissance :</div> <input type="date" name="dateNaissance" id="dateNaissance"
+            required></p>
+        <p>
+        <div class="personal_data">Adresse :</div> <input type="text" name="adresse" id="adresse" required></p>
+        <p>
+        <div class="personal_data" id="Email">Adresse Email :</div> <input type="email" name="email" id="email"
+            required></p>
+        <p>
+        <div class="personal_data">Téléphone :</div> <input type="number" name="telephone" id="telephone" required></p>
+        <p>
+        <div class="personal_data">Situation Familiale :</div> <input type="text" name="Situation Familiale"></p>
     </section>
+    <!-- Fin Sectione 1 -->
+
+    <!-- debut Sectione 2 -->
+    <section id="S2" title="Cursus de l'étudiant">
+        <h2>Cursus de l'étudiant</h2>
+        <ol>
+            <li>Cycle Primaire
+                <ul>
+                    <li><em>Ecole Ahmed Arowa</em></li>
+                    <li>1/10/2009</li>
+                </ul>
+            </li>
+            <li>Cycle Moyen
+                <ul style="list-style-type:disc;">
+                    <li><em>CEM Mohammed Galloul</em></li>
+                    <li>6/09/2015</li>
+                </ul>
+            </li>
+            <li>Cycle Secondaire
+                <ul style="list-style-type: square;">
+                    <li><em>Lycée SI ELHWAS</em></li>
+                    <li>12/09/2019</li>
+                    <li>BAC: MATH</li>
+                </ul>
+            </li>
+            <li>Cycle Universitaire
+                <ul style="list-style-type: none;">
+                    <li><em>USTHB</em></li>
+                    <li>4/09/2022</li>
+                </ul>
+            </li>
+        </ol>
+    </section>
+    <!-- Fin Sectione 2 -->
+
+    <!-- debut Sectione 3 -->
+    <section id="S3" title="Langages de Programmation maîtrisés ">
+        <h2>Expériences Professionnelles</h2>
+        <ul>
+               <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>PHP</li>
+                <li>Java</li>
+                <li>Python</li>
+        </ul>
+    </section>
+    <!-- Fin Sectione 3 -->
+
+    <!-- debut Sectione 4 -->
+    <section id="S4" title=" Exercice : Programme en C">
+        <h2> Exercice : Programme en C</h2>
+        <p>Écrire un programme en langage C qui permet de :</p>
+        <ol>
+            <li>Remplir une matrice de taille 3x3 par des entiers saisis par l'utilisateur.</li>
+            <li>Afficher la matrice.</li>
+            <li>Calculer et afficher la somme des éléments positifs de la matrice.</li>
+        </ol>
+            <pre>
+            <code>
+     <span>#include</span><span class="message"> &lt;stdio.h&gt;</span>
+            
+    // Définition de la taille de la matrice
+    <span>#define</span> ROWS 3
+    <span>#define</span> COLS 3
+            
+    // Fonction pour remplir la matrice
+    <span>void</span> remplirMatrice(int matrice[ROWS][COLS]) {
+    <span>printf</span>(<span class="message">"Entrez les elements de la matrice %dx%d:\n"</span>, ROWS, COLS);
+         <span>for</span> (<span>int</span> i = 0; i &lt; ROWS; i++) {
+              <span>for</span> (<span>int</span> j = 0; j &lt; COLS; j++) {
+                  <span>printf</span>("Element [%d][%d] : ", i + 1, j + 1);
+                <span>scanf</span>(<span class="message">"%d"</span>, &amp;matrice[i][j]);
+            }
+        }
+    }
+            
+    // Fonction pour calculer et afficher la somme des éléments positifs
+    <span>void</span> sommePositifs(<span>int</span> matrice[ROWS][COLS]) {
+    <span>int</span> somme = 0;
+        span>for</span> (<span>int</span> i = 0; i &lt; ROWS; i++) {
+                <span>for</span> (<span>int</span> j = 0; j &lt; COLS; j++) {
+                     <span>if</span> (matrice[i][j] &gt; 0) {
+                      somme += matrice[i][j];
+                }
+            }
+        }
+        <span>printf</span>(<span class="message">"La somme des elements positifs de la matrice est : %d\n"</span>, somme);
+    }
+    
+    // Fonction principale
+    <span>int</span> main() {
+        // Déclaration de la matrice
+        <span>int</span> matrice[ROWS][COLS];
+    
+        // Appel de la fonction pour remplir la matrice
+        remplirMatrice(matrice);
+    
+        // Affichage de la matrice
+        <span>printf</span>(<span class="message">"\nLa matrice que vous avez entre est :\n"</span>);
+        <span>for</span> (<span>int</span> i = 0; i &lt; ROWS; i++) {
+            <span>for</span> (<span>int</span> j = 0; j &lt; COLS; j++) {
+                <span>printf</span>(<span class="message">"%d"</span>, matrice[i][j]);
+            }
+            <span>printf</code>(<span class="message">"\n"</span>);
+        }
+    
+    // Appel de la fonction pour calculer et afficher la somme des éléments positifs
+
+        sommePositifs(matrice);
+    
+        <span>return</span> 0;
+    }
+                </code>
+              </pre>
+
+    </section>
+    <!-- Fin Sectione 4 -->
+
+    <p id="formule_math">&pi;<sub>i</sub> = &alpha; (X<sub>1</sub> + Y<sub>2</sub>) <sup>k+1</sup> / &lambda;<sup> i</sup></p>
+
+    <div class="footer">
+        <a href="#top">HAUT DE PAGE</a>
+    </div>
 
 </body>
 
