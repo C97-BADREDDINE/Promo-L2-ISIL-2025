@@ -10,7 +10,8 @@ public class Technicien extends Personne{
     private Technicien chefEquipe;
     private ArrayList<Technicien> membre;
 
-    public Technicien(int matricule,Vehicule eng, Specialite specialite) {
+    public Technicien(String nom,int matricule,Vehicule eng, Specialite specialite) {
+        super.setNom(nom);
         this.matricule = matricule;
         this.engin = eng;
         this.specialite = specialite;
@@ -61,20 +62,29 @@ public class Technicien extends Personne{
 
     public void designerChefEquipe(Technicien t) {
         this.chefEquipe = t;
-        if(!t.getMembre().contains(this))
-            this.membre.add(this);
+       /* if(!t.getMembre().contains(this))
+            this.membre.add(this);*/
     }
 
     public void ajouetVehicule(Vehicule v) {
-        if (membre.isEmpty()) {
+        this.engin = v;
+        v.ajouterTechnicien(this);
+        /*if (membre.isEmpty()) {
             System.out.println("No technician available.");
         } else {
             this.engin = v;
+            v.ajouterTechnicien(this);
             if (membre.contains(this)) {
                 System.out.println("Technician is already a member.");
                 membre.remove(this);
             }
-        }
+        }*/
     }
 
+    @Override
+    public String toString() {
+        return "Technicien [matricule=" + matricule + ", specialite=" + specialite + ", engin=" + engin + "]";
+    }
+
+    
 }

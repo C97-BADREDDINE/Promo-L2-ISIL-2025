@@ -50,7 +50,7 @@ public class Reparation {
     }
 
     public  boolean isreparation() {
-        return dateRep != null && nbHeure > 0 && travaux != null;
+        return dateRep != null && nbHeure > 0;
     }
 
     public void ajouterPiece(Piece p) {

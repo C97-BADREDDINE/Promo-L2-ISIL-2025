@@ -33,6 +33,12 @@ public class Vehicule {
     }
 
     public void ajouterTechnicien(Technicien t){
-        this.conducteur = t;
+        this.setConducteur(t);
     }
+
+    @Override
+    public String toString() {
+        return "Vehicule [conducteur=" /*+ conducteur.getNom() */+ ", immatricule=" + immatricule + ", marque=" + marque + "]";
+    }
+
 }

@@ -67,12 +67,28 @@ public class Equipement {
 
         public void ajouterFournisseur(Fournisseur f) {
             this.fournisseur = f;
-            f.ajouterEquipement(this);
+             if (!f.getEquipements().contains(this)) {
+                f.ajouterEquipement(this);
+            }
+            
         }
 
         public void supprimerFournisseur(Fournisseur f) {
-            this.fournisseur = null;
-            f.supprimerEquipement(this);
+            if (getFournisseur()==f) {
+                this.fournisseur = null;
+                System.out.println("Fournisseur supprimé");
+            }else{
+                System.out.println("Echec de suppression de fournisseur");
+            }   
         }
+
+
+        @Override
+        public String toString() {
+            return "Equipement [numSérie=" + numSérie + ", designation=" + designation + ", prix=" + prix + ", affecté="
+                    + affecté + ", fournisseur=" + fournisseur + ", type=" + type + "]";
+        }
+
+        
 
 }

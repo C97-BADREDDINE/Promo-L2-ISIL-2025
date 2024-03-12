@@ -168,6 +168,8 @@
         .nav-list ol li a:hover {
             color: red;
         }
+
+        
     </style>
 </head>
 
@@ -269,11 +271,11 @@
     <span>#define</span> COLS 3
             
     // Fonction pour remplir la matrice
-    <span>void</span> remplirMatrice(int matrice[ROWS][COLS]) {
+    <span>void</span> remplirMatrice(<span>int</span> matrice[ROWS][COLS]) {
     <span>printf</span>(<span class="message">"Entrez les elements de la matrice %dx%d:\n"</span>, ROWS, COLS);
          <span>for</span> (<span>int</span> i = 0; i &lt; ROWS; i++) {
               <span>for</span> (<span>int</span> j = 0; j &lt; COLS; j++) {
-                  <span>printf</span>("Element [%d][%d] : ", i + 1, j + 1);
+                  <span>printf</span>(<span class="message">"Element [%d][%d] : "</span>, i + 1, j + 1);
                 <span>scanf</span>(<span class="message">"%d"</span>, &amp;matrice[i][j]);
             }
         }
@@ -282,7 +284,7 @@
     // Fonction pour calculer et afficher la somme des éléments positifs
     <span>void</span> sommePositifs(<span>int</span> matrice[ROWS][COLS]) {
     <span>int</span> somme = 0;
-        span>for</span> (<span>int</span> i = 0; i &lt; ROWS; i++) {
+        <span>for</span> (<span>int</span> i = 0; i &lt; ROWS; i++) {
                 <span>for</span> (<span>int</span> j = 0; j &lt; COLS; j++) {
                      <span>if</span> (matrice[i][j] &gt; 0) {
                       somme += matrice[i][j];

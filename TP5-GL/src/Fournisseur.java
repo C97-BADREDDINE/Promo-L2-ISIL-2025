@@ -59,7 +59,18 @@ public class Fournisseur {
     }
 
     public void supprimerEquipement(Equipement e) {
-        equipements.remove(e);
+        for(Equipement equip : equipements){
+            if(equip.equals(e))
+                equipements.remove(e);
+        }
     }
+
+    @Override
+    public String toString() {
+        return "\nFournisseur [numRC=" + numRC + ", raisonSocial=" + raisonSocial + ", adresse=" + adresse + ", capital="
+                + capital + ", equipements=" + equipements + "]\n\n";
+    }
+
+    
 
 }

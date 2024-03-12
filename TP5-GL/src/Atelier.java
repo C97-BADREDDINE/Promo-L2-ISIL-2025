@@ -11,6 +11,12 @@ public class Atelier {
         this.sortie = sortie;
     }
 
+    public Atelier() {
+        this.numAtelier = 0;
+        this.entrée = new Date(0);
+        this.sortie = new Date(0);
+    }
+
     public int getNumAtelier() {
         return numAtelier;
     }
@@ -34,5 +40,12 @@ public class Atelier {
     public void setSortie(Date sortie) {
         this.sortie = sortie;
     }
+
+    @Override
+    public String toString() {
+        return "Atelier [numAtelier=" + numAtelier + ", entrée=" + entrée + ", sortie=" + sortie + "]";
+    }
+
+    
     
 }
