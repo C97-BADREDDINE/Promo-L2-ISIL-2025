@@ -33,12 +33,20 @@ public class Vehicule {
     }
 
     public void ajouterTechnicien(Technicien t){
-        this.setConducteur(t);
+        t.ajouetVehicule(this);
     }
 
-    @Override
+    /*@Override
     public String toString() {
-        return "Vehicule [conducteur=" /*+ conducteur.getNom() */+ ", immatricule=" + immatricule + ", marque=" + marque + "]";
+        return "Vehicule conducteur=" +conducteur.getNom() + ", immatricule=" + immatricule + ", marque=" + marque + "";
+    }*/
+
+    public String toString() {
+        return "\tVehicule : marque= " + marque +"\timmatricule= "+ immatricule  ;
+    }
+
+    public void AfficherVhicule(){
+        System.out.println("\nConducteur "+conducteur.getNom()+"\t"+toString()+"\n");
     }
 
 }
