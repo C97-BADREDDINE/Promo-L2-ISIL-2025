@@ -36,11 +36,6 @@ public class Vehicule {
         t.ajouetVehicule(this);
     }
 
-    /*@Override
-    public String toString() {
-        return "Vehicule conducteur=" +conducteur.getNom() + ", immatricule=" + immatricule + ", marque=" + marque + "";
-    }*/
-
     public String toString() {
         return "\tVehicule : marque= " + marque +"\timmatricule= "+ immatricule  ;
     }

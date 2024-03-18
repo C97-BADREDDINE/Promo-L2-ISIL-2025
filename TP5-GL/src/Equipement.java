@@ -6,7 +6,7 @@ public class Equipement {
         private double prix;
         private Atelier affecté; 
         private Fournisseur fournisseur;
-        private TypeEquipment type;
+        public TypeEquipment type;
 
         public Equipement(int numSérie, String designation, double prix, TypeEquipment type, Atelier affecte) {
             this.numSérie = numSérie;
@@ -86,7 +86,7 @@ public class Equipement {
         @Override
         public String toString() {
             return "Equipement [numSérie=" + numSérie + ", designation=" + designation + ", prix=" + prix + ", affecté="
-                    + affecté + ", fournisseur=" + fournisseur + ", type=" + type + "]";
+                    + affecté +  ", type=" + type + "]";
         }
 
         

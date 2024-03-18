@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Technicien extends Personne{
 
     private int matricule;
-    private Specialite specialite;
+    public Specialite specialite;
     private Vehicule engin;
 
     private Technicien chefEquipe;
@@ -73,16 +73,6 @@ public class Technicien extends Personne{
     public void ajouetVehicule(Vehicule v) {
         this.engin = v;
         v.setConducteur(this);
-        /*if (membre.isEmpty()) {
-            System.out.println("No technician available.");
-        } else {
-            this.engin = v;
-            v.ajouterTechnicien(this);
-            if (membre.contains(this)) {
-                System.out.println("Technician is already a member.");
-                membre.remove(this);
-            }
-        }*/
     }
 
     @Override

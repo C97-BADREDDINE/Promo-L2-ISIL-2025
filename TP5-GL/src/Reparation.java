@@ -49,8 +49,22 @@ public class Reparation {
         return listePieceRep;
     }
 
-    public  boolean isreparation() {
-        return dateRep != null && nbHeure > 0;
+    public  boolean estReformable(Piece p) {
+        for (Piece piece : listePieceRep) {
+            if (piece.getRef() == p.getRef()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public double calculerMontantRéparation() {	      
+        double montant = 0;
+        for (Piece piece : listePieceRep) {
+            montant += piece.getPrix();
+        }
+        montant += nbHeure * 10;
+        return montant;
     }
 
     public void ajouterPiece(Piece p) {
@@ -85,4 +99,19 @@ public class Reparation {
         System.out.println(toString());
     }
 
+    public void affecterEquipement(Equipement e) {
+        this.equipement = e;
+    }
+
+    public void affecterTechnicien(Technicien t) {
+        this.techinicien = t;
+    }
+
+    public void afficherEquipement() {
+        System.out.println(equipement);
+    }
+
+    public void afficherTechnicien() {
+        System.out.println(techinicien);
+    }
 }

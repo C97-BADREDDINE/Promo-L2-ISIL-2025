@@ -56,6 +56,7 @@ public class Fournisseur {
 
     public void ajouterEquipement(Equipement e) {
         equipements.add(e);
+        e.setFournisseur(this);
     }
 
     public void supprimerEquipement(Equipement e) {
@@ -68,7 +69,7 @@ public class Fournisseur {
     @Override
     public String toString() {
         return "\nFournisseur [numRC=" + numRC + ", raisonSocial=" + raisonSocial + ", adresse=" + adresse + ", capital="
-                + capital + ", equipements=" + equipements + "]\n\n";
+                + capital + ", equipements=" + equipements + "]\n";
     }
 
     
