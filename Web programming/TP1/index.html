@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My beginnings with Web Programming</title>
     <style>
-
         h1 {
             text-align: center;
         }
@@ -97,12 +96,12 @@
             padding: 10px;
             border-radius: 10px;
             box-shadow: 0 0 10px 0 darkblue;
-            
-            
+
+
         }
 
         #S4 span {
-            color:red;
+            color: red;
         }
 
         #S4 .message {
@@ -146,7 +145,7 @@
             background-color: lightgray;
             border: 1px solid darkblue;
             border-radius: 10px;
-            box-shadow: 0 0 10px 0 darkblue; 
+            box-shadow: 0 0 10px 0 darkblue;
         }
 
         .nav-list ol {
@@ -169,7 +168,22 @@
             color: red;
         }
 
-        
+        #S4 .commentaire {
+            color: gray;
+        }
+
+        #S1 select {
+            margin-top: 10px;
+            display: inline-block;
+            width: 30%;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid darkblue;
+            font-size: 12pt;
+            color: darkblue;
+            background-color: white;
+
+        }
     </style>
 </head>
 
@@ -202,7 +216,11 @@
         <p>
         <div class="personal_data">Téléphone :</div> <input type="number" name="telephone" id="telephone" required></p>
         <p>
-        <div class="personal_data">Situation Familiale :</div> <input type="text" name="Situation Familiale"></p>
+        <div class="personal_data">Situation Familiale :</div>
+        <Select>
+            <option value="Celibataire">Celibataire</option>
+            <option value="Marie">Marié(e)</option>
+        </Select></p>
     </section>
     <!-- Fin Sectione 1 -->
 
@@ -243,14 +261,17 @@
     <section id="S3" title="Langages de Programmation maîtrisés ">
         <h2>Expériences Professionnelles</h2>
         <ul>
-               <li>HTML</li>
-                <li>CSS</li>
-                <li>JavaScript</li>
-                <li>PHP</li>
-                <li>Java</li>
-                <li>Python</li>
+            <li><input type="checkbox" id="html" name="language" value="HTML"><label for="html">HTML</label></li>
+            <li><input type="checkbox" id="css" name="language" value="CSS"><label for="css">CSS</label></li>
+            <li><input type="checkbox" id="javascript" name="language" value="JavaScript"><label
+                    for="javascript">JavaScript</label></li>
+            <li><input type="checkbox" id="php" name="language" value="PHP"><label for="php">PHP</label></li>
+            <li><input type="checkbox" id="java" name="language" value="Java"><label for="java">Java</label></li>
+            <li><input type="checkbox" id="python" name="language" value="Python"><label for="python">Python</label>
+            </li>
         </ul>
     </section>
+
     <!-- Fin Sectione 3 -->
 
     <!-- debut Sectione 4 -->
@@ -262,15 +283,16 @@
             <li>Afficher la matrice.</li>
             <li>Calculer et afficher la somme des éléments positifs de la matrice.</li>
         </ol>
+        <div style="overflow-x:auto;">
             <pre>
-            <code>
+            <code style="white-space: pre-wrap;">
      <span>#include</span><span class="message"> &lt;stdio.h&gt;</span>
             
-    // Définition de la taille de la matrice
+    <span class="commentaire">// Définition de la taille de la matrice</span>
     <span>#define</span> ROWS 3
     <span>#define</span> COLS 3
             
-    // Fonction pour remplir la matrice
+    <span class="commentaire">// Fonction pour remplir la matrice</span>
     <span>void</span> remplirMatrice(<span>int</span> matrice[ROWS][COLS]) {
     <span>printf</span>(<span class="message">"Entrez les elements de la matrice %dx%d:\n"</span>, ROWS, COLS);
          <span>for</span> (<span>int</span> i = 0; i &lt; ROWS; i++) {
@@ -281,7 +303,7 @@
         }
     }
             
-    // Fonction pour calculer et afficher la somme des éléments positifs
+    <span class="commentaire">// Fonction pour calculer et afficher la somme des éléments positifs</span>
     <span>void</span> sommePositifs(<span>int</span> matrice[ROWS][COLS]) {
     <span>int</span> somme = 0;
         <span>for</span> (<span>int</span> i = 0; i &lt; ROWS; i++) {
@@ -294,15 +316,15 @@
         <span>printf</span>(<span class="message">"La somme des elements positifs de la matrice est : %d\n"</span>, somme);
     }
     
-    // Fonction principale
+    <span class="commentaire">// Fonction principale</span>
     <span>int</span> main() {
-        // Déclaration de la matrice
+        <span class="commentaire">// Déclaration de la matrice</span>
         <span>int</span> matrice[ROWS][COLS];
     
-        // Appel de la fonction pour remplir la matrice
+        <span class="commentaire">// Appel de la fonction pour remplir la matrice</span>
         remplirMatrice(matrice);
     
-        // Affichage de la matrice
+        <span class="commentaire">// Affichage de la matrice</span>
         <span>printf</span>(<span class="message">"\nLa matrice que vous avez entre est :\n"</span>);
         <span>for</span> (<span>int</span> i = 0; i &lt; ROWS; i++) {
             <span>for</span> (<span>int</span> j = 0; j &lt; COLS; j++) {
@@ -311,7 +333,7 @@
             <span>printf</code>(<span class="message">"\n"</span>);
         }
     
-    // Appel de la fonction pour calculer et afficher la somme des éléments positifs
+    <span class="commentaire">// Appel de la fonction pour calculer et afficher la somme des éléments positifs</span>
 
         sommePositifs(matrice);
     
@@ -319,11 +341,13 @@
     }
                 </code>
               </pre>
+        </div>
 
     </section>
     <!-- Fin Sectione 4 -->
 
-    <p id="formule_math">&pi;<sub>i</sub> = &alpha; (X<sub>1</sub> + Y<sub>2</sub>) <sup>k+1</sup> / &lambda;<sup> i</sup></p>
+    <p id="formule_math">&pi;<sub>i</sub> = &alpha; (X<sub>1</sub> + Y<sub>2</sub>) <sup>k+1</sup> / &lambda;<sup>
+            i</sup></p>
 
     <div class="footer">
         <a href="#top">HAUT DE PAGE</a>
