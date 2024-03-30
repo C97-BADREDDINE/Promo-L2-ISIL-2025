@@ -66,7 +66,7 @@ public class Equipement {
         }
 
         public void ajouterFournisseur(Fournisseur f) {
-            this.fournisseur = f;
+            setFournisseur(f);
              if (!f.getEquipements().contains(this)) {
                 f.ajouterEquipement(this);
             }

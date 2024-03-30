@@ -4,7 +4,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-
         //------------------------relation Equipement avec Atelier et Fournisseur -------------------------------------
         System.out.println("\n --------relation Equipement avec Atelier et Fournisseur ---------------------\n");
         Atelier a1 = new Atelier(1, new Date(121, 9, 10), new Date(121, 9, 11));
@@ -59,6 +58,7 @@ public class Main {
 
         //afficher Technicien <<T2>> avec Vehicule <<V2>>
         System.out.println(T2);
+        
 
 
         //-----------------------------------relation reparation avec piece---------------------------------- 
@@ -70,6 +70,7 @@ public class Main {
         // ajouter piece de reparation Ecran de Dell inspiron
         r1.ajouterPiece(p1);
         r1.ajouterPiece(p2);
+        r1.afficherListPieces();
         System.out.println("p1 est Reformable ? :"+r1.estReformable(p1));
         
         //calculer prix de reparation
