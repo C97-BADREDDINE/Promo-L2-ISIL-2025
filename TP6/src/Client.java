@@ -1,17 +1,25 @@
 
 public class Client {
+    private int numero;
     private String nom;
     private String prenom;
     private String adresse;
     private String tel;
-    private String email;
 
-    public Client(String nom, String prenom, String adresse, String tel, String email) {
+    public Client() {
+        this.nom = "";
+        this.prenom = "";
+        this.adresse = "";
+        this.tel = "";
+        this.numero = 0;
+    }
+
+    public Client(int numero, String nom, String prenom, String adresse, String tel) {
+        this.numero = numero;
         this.nom = nom;
         this.prenom = prenom;
         this.adresse = adresse;
         this.tel = tel;
-        this.email = email;
     }
 
     public String getNom() {
@@ -30,8 +38,8 @@ public class Client {
         return tel;
     }
 
-    public String getEmail() {
-        return email;
+    public int getNumero() {
+        return numero;
     }
 
     public void setNom(String nom) {
@@ -50,18 +58,18 @@ public class Client {
         this.tel = tel;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
     @Override
     public String toString() {
         return "Client :" +
+                "\n\tnumero=" + numero + "\n" +
                 "\tnom='" + nom + "'\n" +
                 "\t, prenom='" + prenom + "'\n" +
                 "\t, adresse='" + adresse + "'\n" +
-                "\t, tel='" + tel + "'\n" +
-                "\t, email='" + email + "'\n";
+                "\t, tel='" + tel + "'\n";
     }
 
     public void afficher() {
