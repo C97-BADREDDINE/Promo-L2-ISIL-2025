@@ -1,4 +1,4 @@
-import java.util.Locale.Category;
+
 
 public class Produit {
     private int codeBarre;

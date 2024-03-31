@@ -1,27 +1,24 @@
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CentreCommercial {
+public class CentreCommercial implements Critere {
 
     private String nom;
     private String adresse;
-    private ArrayList<Client> clients;
-    private ArrayList<Produit> produits;
-    private ArrayList<Commande> commandes;
+    private ArrayList<Client> clients = new ArrayList<Client>();
+    private ArrayList<Produit> produits = new ArrayList<Produit>();
+    private ArrayList<Commande> commandes = new ArrayList<Commande>();
 
     public CentreCommercial() {
         this.nom = "";
         this.adresse = "";
-        clients = new ArrayList<Client>();
-        produits = new ArrayList<Produit>();
     }
 
     public CentreCommercial(String nom, String adresse) {
         this.nom = nom;
         this.adresse = adresse;
-        clients = new ArrayList<Client>();
-        produits = new ArrayList<Produit>();
     }
 
     public Client chercherClient(int numero) {
@@ -34,10 +31,10 @@ public class CentreCommercial {
     }
 
     public void ajouterClient(Client client) {
-        if(chercherClient(client.getNumero()) == null) {
+        if (chercherClient(client.getNumero()) == null) {
             clients.add(client);
 
-        }else {
+        } else {
             System.out.println("Client déjà existant");
         }
     }
@@ -75,10 +72,10 @@ public class CentreCommercial {
     }
 
     public void ajouterProduit(Produit produit) {
-        if(chercherProduit(produit.getCodeBarre()) == null) {
+        if (chercherProduit(produit.getCodeBarre()) == null) {
             produits.add(produit);
 
-        }else {
+        } else {
             System.out.println("Produit déjà existant");
         }
     }
@@ -106,7 +103,6 @@ public class CentreCommercial {
         return produits.size();
     }
 
-
     public void afficherClients() {
         for (Client client : clients) {
             client.afficher();
@@ -129,6 +125,15 @@ public class CentreCommercial {
 
     public void ajouterCommande(Commande commande) {
         commandes.add(commande);
+    }
+
+    public void supprimerCommande(Client client, Produit produit, LocalTime localTime) {
+        for (Commande commande : commandes) {
+            if (commande.getClient().equals(client) && commande.getProduit().equals(produit)
+                    && commande.getDateCde().equals(localTime)) {
+                commandes.remove(commande);
+            }
+        }
     }
 
     public Client clientFedele() {
@@ -186,4 +191,20 @@ public class CentreCommercial {
 
         return bestSellingProduct;
     }
+
+    public boolean Ok(Object o) {
+        try {
+            if (o instanceof ArrayList<?>) {
+                ArrayList<?> list = (ArrayList<?>) o;
+                if (list.size() > 100 && list.get(0) instanceof Client) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
