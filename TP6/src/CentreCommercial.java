@@ -1,4 +1,3 @@
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +18,14 @@ public class CentreCommercial implements Critere {
     public CentreCommercial(String nom, String adresse) {
         this.nom = nom;
         this.adresse = adresse;
+    }
+
+    public ArrayList<Client> getClients() {
+        return clients;
+    }
+
+    public ArrayList<Produit> getProduits() {
+        return produits;
     }
 
     public Client chercherClient(int numero) {
@@ -103,36 +110,26 @@ public class CentreCommercial implements Critere {
         return produits.size();
     }
 
-    public void afficherClients() {
-        for (Client client : clients) {
-            client.afficher();
+    public void afficher(ArrayList<?> lists) {
+        for (Object o : lists) {
+            System.out.println(o);
         }
     }
 
-    public void afficherProduits() {
-        for (Produit produit : produits) {
-            produit.afficher();
-        }
-    }
+    public void ajouterCommande(Commande commande, Client client, Produit produit) {
+        if (commande.getQuantiteCde() > produit.getQuantite()) {
+            System.out.println("Commande ajoutée avec échec !, quantité insuffisante");
+            return;
+        } else {
 
-    public void afficher() {
-        System.out.println("Centre Commercial: " + nom + "\nAdresse: " + adresse);
-        System.out.println("Clients: ");
-        afficherClients();
-        System.out.println("Produits: ");
-        afficherProduits();
-    }
-
-    public void ajouterCommande(Commande commande) {
-        commandes.add(commande);
-    }
-
-    public void supprimerCommande(Client client, Produit produit, LocalTime localTime) {
-        for (Commande commande : commandes) {
-            if (commande.getClient().equals(client) && commande.getProduit().equals(produit)
-                    && commande.getDateCde().equals(localTime)) {
-                commandes.remove(commande);
+            commande.setProduit(produit);
+            commande.setClient(client);
+            if (this.chercherClient(client.getNumero()) == null) {
+                this.ajouterClient(client);
             }
+            commandes.add(commande);
+            produit.setQuantite(produit.getQuantite() - commande.getQuantiteCde());
+            System.out.println("Commande ajoutée avec succès !");
         }
     }
 

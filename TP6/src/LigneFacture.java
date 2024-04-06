@@ -47,9 +47,9 @@ public class LigneFacture {
     }
 
     public void afficher() {
-        System.out.println("Numero de ligne: " + numLigne);
-        System.out.println("Quantite de ligne: " + quantiteLigne);
-        System.out.println("Montant de ligne: " + mountantLigne);
+        System.out.println("-Numero de ligne facutre: " + numLigne);
+        System.out.println("  Quantite de ligne facture : " + quantiteLigne);
+        System.out.println("  Montant de ligne facture: " + calculerMontantLigne()+" DA");
     }
 
     public String getDesignation() {
@@ -57,11 +57,13 @@ public class LigneFacture {
     }
 
     public double calculerMontantLigne() {
-        return quantiteLigne * produit.getPrix();
+        this.mountantLigne= quantiteLigne * produit.getPrix();
+        return mountantLigne;
     }
 
     public void setProduit(Produit produit) {
-        this.produit = produit;
+        if(produit != null)
+            this.produit = produit;
     }
 
     public Produit getProduit() {

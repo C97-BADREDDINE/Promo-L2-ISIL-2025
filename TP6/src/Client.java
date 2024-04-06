@@ -65,11 +65,11 @@ public class Client {
     @Override
     public String toString() {
         return "Client :" +
-                "\n\tnumero=" + numero + "\n" +
-                "\tnom='" + nom + "'\n" +
-                "\t, prenom='" + prenom + "'\n" +
-                "\t, adresse='" + adresse + "'\n" +
-                "\t, tel='" + tel + "'\n";
+                "\n\t-numero Client=" + numero + "\n" +
+                "\t-nom='" + nom + "'\n" +
+                "\t-prenom='" + prenom + "'\n" +
+                "\t-adresse='" + adresse + "'\n" +
+                "\t-tel='" + tel + "'\n";
     }
 
     public void afficher() {

@@ -1,21 +1,21 @@
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 public class Commande {
-    private LocalTime DateCde;
+    private LocalDate DateCde;
     private int quantiteCde;
     private Client client;
     private Produit produit;
     
-    public Commande(LocalTime DateCde ,int quantiteCde){
+    public Commande(LocalDate DateCde ,int quantiteCde){
         this.DateCde=DateCde;
         this.quantiteCde=quantiteCde;
     }
 
-    public LocalTime getDateCde() {
+    public LocalDate getDateCde() {
         return DateCde;
     }
 
-    public void setDateCde(LocalTime DateCde) {
+    public void setDateCde(LocalDate DateCde) {
         this.DateCde = DateCde;
     }
 

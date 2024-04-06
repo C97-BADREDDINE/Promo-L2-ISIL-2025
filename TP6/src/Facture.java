@@ -1,23 +1,17 @@
 
-import java.time.LocalTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public abstract class Facture {
     private int numFacture;
-    private LocalTime dateFacture;
+    private LocalDate dateFacture;
     private double montant = 0;
     private Client client;
     private ArrayList<LigneFacture> lignesFacture = new ArrayList<LigneFacture>();
 
     public Facture() {
         this.numFacture = 0;
-        this.dateFacture = LocalTime.now();
-    }
-
-    public Facture(int numFacture, LocalTime dateFacture, double montant) {
-        this.numFacture = numFacture;
-        this.dateFacture = dateFacture;
-        this.montant = montant;
+        this.dateFacture = LocalDate.now();
     }
 
     public int getNumFacture() {
@@ -28,7 +22,7 @@ public abstract class Facture {
         this.numFacture = numFacture;
     }
 
-    public LocalTime getDateFacture() {
+    public LocalDate getDateFacture() {
         return dateFacture;
     }
 
@@ -36,12 +30,16 @@ public abstract class Facture {
         return client;
     }
 
-    public void setDateFacture(LocalTime dateFacture) {
+    public void setDateFacture(LocalDate dateFacture) {
         this.dateFacture = dateFacture;
     }
 
     public double getMontant() {
         return montant;
+    }
+
+    public ArrayList<LigneFacture> getLignesFacture() {
+        return lignesFacture;
     }
 
     public void setMontant(double montant) {
@@ -57,7 +55,7 @@ public abstract class Facture {
             return 0;
         }
 
-        double montant = 0;
+        
         for (LigneFacture ligneFacture : lignesFacture) {
             montant += ligneFacture.calculerMontantLigne();
         }
@@ -66,29 +64,21 @@ public abstract class Facture {
 
     public void ajouterLigneFacture(LigneFacture ligneFacture) {
         lignesFacture.add(ligneFacture);
-        this.montant += ligneFacture.calculerMontantLigne();
-    }
-
-    public void supprimerLigneFacture(int numLigne) {
-        for (LigneFacture ligneFacture : lignesFacture) {
-            if (ligneFacture.getNumLigne() == numLigne) {
-                lignesFacture.remove(ligneFacture);
-                this.montant -= ligneFacture.calculerMontantLigne();
-            }
-        }
     }
 
     public void afficher() {
-        System.out.println("Numero de facture: " + numFacture);
-        System.out.println("Date de facture: " + dateFacture);
-        System.out.println("Montant de facture: " + montant);
+        System.out.println("Numero de facture: " + getNumFacture());
+        System.out.println("Date de facture: " + getDateFacture());
         System.out.println("Client: " + client.getNom());
         for (LigneFacture ligneFacture : lignesFacture) {
             ligneFacture.afficher();
         }
+        System.out.println("\t\t-------------------------------");
+        System.out.println("\t\t|Montant de facture: " +getMontant() +" DA|");
+        System.out.println("\t\t-------------------------------");
     }
 
-    public abstract void etablirFacture(Client client, int numFacture, LocalTime dateFacture);
+    public abstract void etablirFacture(Client client, int numFacture, LocalDate dateFacture);
 
     public String getNomClient() {
         return client.getNom();

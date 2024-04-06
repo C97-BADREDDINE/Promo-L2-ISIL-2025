@@ -1,15 +1,13 @@
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 public class Facture_Simple extends Facture{
     private int bonus;
 
     public Facture_Simple() {
-        super();
         this.bonus = 0;
     }
 
-    public Facture_Simple(int numFacture, LocalTime dateFacture, double montant, int bonus) {
-        super(numFacture, dateFacture, montant);
+    public Facture_Simple(int bonus) {
         this.bonus = bonus;
     }
 
@@ -21,11 +19,17 @@ public class Facture_Simple extends Facture{
         this.bonus = bonus;
     }
 
-    public void etablirFacture(Client client ,int numFacture ,LocalTime dateFacture){
+    public void etablirFacture(Client client ,int numFacture ,LocalDate dateFacture){
         this.setClient(client);
         this.setNumFacture(numFacture);
         this.setDateFacture(dateFacture);
-        this.setMontant(calculerMontant()+bonus);
+        setBonus(5);
+        setMontant(calculerMontant()+bonus);
+    }
+
+    public void afficher(){
+        System.out.println("bonus : "+bonus+" DA");
+        super.afficher();
     }
 
 

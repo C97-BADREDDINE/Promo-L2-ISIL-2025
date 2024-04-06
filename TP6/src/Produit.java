@@ -66,16 +66,16 @@ public class Produit {
     
     @Override
     public String toString() {
-        return "Produit [codeBarre=" + codeBarre + ", designation=" + designation + ", qauntite=" + qauntite + ", prix="
-                + prix + ", categorie=" + categorie + "]";
+        return "Produit :"+
+        "\n\tCode barre= " + codeBarre + "\n" +
+        "\tdesignation= " + designation + "\n" +
+        "\tqauntite= " + qauntite + "\n" +
+        "\tprix= " + prix + "\n" +
+        "\tcategorie=" + categorie + "\n";
     }
 
     public void afficher() {
-        System.out.println("Code barre: " + codeBarre);
-        System.out.println("Designation: " + designation);
-        System.out.println("Quantite: " + qauntite);
-        System.out.println("Prix: " + prix);
-        System.out.println("Categorie: " + categorie);
+        System.out.println(toString());
     }
 
 
