@@ -12,16 +12,63 @@
             width: 100%;
             height: 100%;
         }
+
+        .Table_vacance {
+            width: 86%;
+            height: 86%;
+            border-collapse: collapse;
+        }
+
+        
+        .footer {
+            width: 100;
+            margin-top: 100px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 12px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 16pt;
+            color: darkblue;
+            font-weight: bold;
+        }
+
+        .footer a {
+            text-decoration: none;
+            color: darkblue;
+        }
+
+        .name_countrie {
+            position: relative;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px;
+        }
+
+        .img-vac {
+            position: relative;
+        }
+
+        .img-vac img {
+            width: 100%;
+            height: 100%;
+        }
+
+
+        
     </style>
 </head>
 
 <body>
+    <h1>Vacances en Images</h1>
     <Table class="Table_vacance">
-        <div class="border_pays">
-            <tr >
-                <td id="colombia">
+        <div>
+            <tr>
+                <td class="border_left">
                     <p>
-                            La Colombie est un pays dynamique et diversifié situé au nord-ouest de l’Amérique du Sud, bordé
+                        La Colombie est un pays dynamique et diversifié situé au nord-ouest de l’Amérique du Sud, bordé
                         par
                         par le Venezuela, le Brésil, le Pérou, l'Équateur et le Panama. Son paysage est incroyablement
                         varié, avec des paysages luxuriants
@@ -59,26 +106,28 @@
                         et immersion culturelle.
                     </p>
                 </td>
-                <td>
-                    <div>
-                        <img src="./image/Colombia.png" alt="Colombia">
+                <td id="colombia" class="border_right">
+                    <div class="img-vac">
                         <div class="name_countrie">Colombia</div>
+                        <img src="./image/Colombia.png" alt="Colombia">
+                        
                     </div>
                 </td>
             </tr>
         </div>
 
-        <div class="border_pays">
+        <div>
             <tr>
-                <td id="sudafrique">
-                    <div >
-                        <img src="./image/image.png" alt="South Africa">
+                <td id="sudafrique" class="border_left">
+                    <div>
                         <div class="name_countrie">South Africa</div>
+                        <img src="./image/image.png" alt="South Africa">
+                        
                     </div>
                 </td>
-                <td>
+                <td class="border_right">
                     <p>
-                            L’Afrique du Sud, située à la pointe sud du continent africain, est un pays d’une diversité
+                        L’Afrique du Sud, située à la pointe sud du continent africain, est un pays d’une diversité
                         remarquable, tant par ses paysages que par sa population. Connue sous le nom de Nation
                         arc-en-ciel, elle est célébrée pour son multiculturalisme, sa beauté naturelle époustouflante et
                         son histoire complexe.
@@ -113,11 +162,11 @@
             </tr>
         </div>
 
-        <div class="border_pays"></div>
+        <div></div>
         <tr>
-            <td id="thailand">
+            <td class="border_left">
                 <p>
-                        Le Royaume de Thaïlande, est un pays d'Asie du Sud-Est réputé pour son riche patrimoine culturel,
+                    Le Royaume de Thaïlande, est un pays d'Asie du Sud-Est réputé pour son riche patrimoine culturel,
                     ses paysages époustouflants, ses villes dynamiques et son hospitalité chaleureuse. Située au centre
                     de la péninsule indochinoise, la Thaïlande partage des frontières avec le Myanmar, le Laos, le
                     Cambodge et la Malaisie et possède des côtes le long du golfe de Thaïlande et de la mer d'Andaman.
@@ -145,23 +194,25 @@
                     fascinante et dynamique pour les voyageurs du monde entier.
                 </p>
             </td>
-            <td>
+            <td id="thailand" class="border_right">
                 <div>
-                    <img src="./image/tahiland.png" alt="Thailand">
                     <div class="name_countrie">Thailand</div>
+                    <img src="./image/tahiland.png" alt="Thailand">
+                    
                 </div>
             </td>
         </tr>
         </div>
-        <div class="border_pays">
+        <div>
             <tr>
-                <td id="tanzania">
-                    <div class="">
-                        <img src="./image/Tanzania.png" alt="Tanzania">
+                <td id="tanzania" class="border_left">
+                    <div >
                         <div class="name_countrie">Tanzania</div>
+                        <img src="./image/Tanzania.png" alt="Tanzania">
+                        
                     </div>
                 </td>
-                <td>
+                <td class="border_right">
                     <p>
                         La Tanzanie, située en Afrique de l'Est, est réputée pour sa beauté naturelle à couper le
                         souffle et

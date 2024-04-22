@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #333;
+}
+
 .footer {
     width: 100;
     margin-top: 100px;
@@ -30,11 +36,6 @@
     margin: 50px;
 }
 
-.name_countrie{
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-}
 
 .img_vacances img {
     display: inline-block;
@@ -72,13 +73,24 @@ Table {
     font-size: 20px;
     font-weight: bold;
 }
-.Table_vacance td{
-    border: 2px solid black;
+
+.Table_vacance td {
+    width: 50%;
+    height: 50%;
     padding: 20px;
     background-color: lightgray;
-    border-radius: 10px;
 }
 
+
+.Table_vacance tr{
+    display: inline-block;
+    margin: 20px;
+    padding: 0px;
+    background-color: lightgray;
+    border-radius: 10px;
+    border: 2px solid black;
+
+}
 
 .Table_general td {
     border: 2px solid black;
