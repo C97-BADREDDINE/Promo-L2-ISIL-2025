@@ -85,7 +85,7 @@ Table {
 .Table_vacance tr{
     display: inline-block;
     margin: 20px;
-    padding: 0px;
+    padding: 5px;
     background-color: lightgray;
     border-radius: 10px;
     border: 2px solid black;
