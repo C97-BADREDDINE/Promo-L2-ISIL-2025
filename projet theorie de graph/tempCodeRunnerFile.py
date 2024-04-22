@@ -47,7 +47,8 @@ def clear_all():
 
 def onclick(event):
     if event.button == 1:  # Left mouse button clicked
-        x,y =event.xdata, event.ydata
+        pos= standard_to_graph_coordinate((event.x, event.y), scale=1, shift=(0, 0))
+        x, y = pos
         node_label = len(G.nodes) + 1
         G.add_node(node_label, pos=(x, y))
         print("cordonné ajoutez",x , y)
