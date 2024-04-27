@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiche de vœux </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: navy;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+
+        td {
+            display: inline-block;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        #TableExt {
+            width: 800px;
+            margin: 0 auto;
+            border: 3px solid black;
+            padding: 0;
+        }
+
+        #TableExt td ,tr{
+            display: block;
+            width: 800px;
+            border: none;
+        }
+
+        #TableInt {
+            display: block;
+            width: 100%;
+            border: none;
+            padding: 0;
+        }
+
+        TableInt tr {
+            display: block;
+            border: none;
+            padding: 0;
+            width: 100%;
+        }
+
+        #TableInt td {
+            display: inline-block; 
+            width: 100%;
+            margin: 5px;
+            font-size: 18px;
+        }
+
+        #TableInt .cellule1 {
+            width: 40%;
+            text-align: right;
+        }
+
+        #TableInt .cellule2 {
+            width: 10%;
+        }
+
+        #TableInt .cellule3 {
+            width: 40%;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="radio"] {
+            margin: 5px;
+        }
+
+        input[type="checkbox"] {
+            margin: 5px;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        select {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: orange;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: darkorange;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        #fusionnée {
+            display: block;
+            width: 100%;
+            border: none;
+        }
+
+        #fusionnée td {
+            display: inline-block;
+            width: 100%;
+            margin: 5px;
+            font-size: 18px;
+            border: none;
+        }
+
+        #fusionnée td {
+            text-align: center;
+        }
+
+        #fusionnée input[type="submit"] {
+            width: 40%;
+            padding: 10px;
+            border: none;
+            background-color: orange;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #fusionnée input[type="submit"]:hover {
+            background-color: darkorange;
+        }
+
+        #fusionnée input[type="reset"] {
+            width: 40%;
+            padding: 10px;
+            border: none;
+            background-color: #f2f2f2;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #fusionnée input[type="reset"]:hover {
+            background-color: #e2e2e2;
+        }
+
+
+        
+        
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align: center; font-weight: bold; font-size: 24px; color: orange; margin-top: 10%;">Fiche de vœux</h1>
+
+    <table border="1" style="margin: 0 auto;" id="TableExt">
+        <tr>
+            <td>
+                <form action="reponse.php" method="post">
+                    <table id="TableInt">
+                        <tr>
+                            <td class="cellule1">Nom</td>
+                            <td class="cellule2">:</td>
+                            <td class="cellule3"><input type="text" name="prenom"> </td>
+                        </tr>
+                        <tr>
+                            <td class="cellule1">Prénom</td>
+                            <td class="cellule2">:</td>
+                            <td class="cellule3"><input type="text" name="prenom"></td>
+                        </tr>
+                        <tr>
+                            <td class="cellule1">Date de naissance</td>
+                            <td class="cellule2">:</td>
+                            <td class="cellule3"><input type="text" name="date_naissance"></td>
+                        </tr>
+                        <tr>
+                            <td class="cellule1">N° de téléphone</td>
+                            <td class="cellule2">:</td>
+                            <td class="cellule3"><input type="text" name="telephone"></td>
+                        </tr>
+                        <tr>
+                            <td class="cellule1">Adresse</td>
+                            <td class="cellule2">:</td>
+                            <td class="cellule3"><textarea name="adresse"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td class="cellule1">Genre</td>
+                            <td class="cellule2">:</td>
+                            <td class="cellule3">
+                                <input type="radio" name="genre" value="Masculin"> Masculin
+                                <input type="radio" name="genre" value="Féminin"> Féminin
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="cellule1">Civilité</td>
+                            <td class="cellule2">:</td>
+                            <td class="cellule3">
+                                <input type="radio" name="civilite" value="Marié"> Marié
+                                <input type="radio" name="civilite" value="Célibataire" checked> Célibataire
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="cellule1">Domaine</td>
+                            <td class="cellule2">:</td>
+                            <td class="cellule3">
+                                <select name="domaine">
+                                    <option value="">-- Choisissez --</option>
+                                    <option value="1">INFORMATIQUE</option>
+                                    <option value="2">MEDECINE</option>
+                                    <option value="3">SCIENCES JURIDIQUES</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="cellule1">Languages desired</td>
+                            <td class="cellule2">:</td>
+                            <td class="cellule3">
+                                <input type="checkbox" name="language" value="French" checked> French
+                                <input type="checkbox" name="language" value="English"> English
+                                <input type="checkbox" name="language" value="Arabic"> Arabic
+                                <input type="checkbox" name="language" value="No Preference"> No Preference
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="cellule1">Lettre de motivation</td>
+                            <td class="cellule2">:</td>
+                            <td class="cellule3">
+                                <input type="file" name="cover_letter">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </td>
+            <tr id="fusionnée">
+                <td colspan="3" style="text-align: center;">
+                    <input type="submit" value="Sauvegarder">
+                    <input type="reset" value="Annuler">
+                </td>
+            </tr>
+        </tr>
+    </table>
+
+
+</html>

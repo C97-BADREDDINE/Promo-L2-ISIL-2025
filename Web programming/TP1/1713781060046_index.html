@@ -53,7 +53,7 @@
             text-align: left;
         }
 
-        #S1 input {
+       #S1 input {
             margin-top: 10px;
             display: inline-block;
             width: 30%;
@@ -81,6 +81,7 @@
             font-family: Arial, sans-serif;
             font-weight: bold;
         }
+
 
         #S3 ul li {
             margin-top: 10px;
@@ -230,6 +231,35 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 10);
         }
+
+        #S2 input{
+            display: inline-block;  
+            width: 30%;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid darkblue;
+            font-size: 12px;
+            color: darkblue;
+            background-color: white;
+            
+
+        }
+
+        #S2 .inp-marg{
+            font-weight: bold;
+            color: darkblue;
+            display: inline-block;
+            width: 30%;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            color: darkblue;
+            text-align: left;
+            padding-right: 100px;
+        }
+
+
+        
+        
     </style>
 </head>
 
@@ -276,27 +306,27 @@
         <ol>
             <li>Cycle Primaire
                 <ul>
-                    <li><em>Ecole Ahmed Arowa</em></li>
-                    <li>1/10/2009</li>
+                    <li><span class="inp-marg"><em>Ecole :</em></span><input type="text"  name="Ecole" id="ecole" required></li>
+                    <li><span class="inp-marg"> Année de première inscription : </span><input  type="date"></li>
                 </ul>
             </li>
             <li>Cycle Moyen
                 <ul style="list-style-type:disc;">
-                    <li><em>CEM Mohammed Galloul</em></li>
-                    <li>6/09/2015</li>
+                    <li><span class="inp-marg"><em> CEM : </em></span> <input type="text" ></li>
+                    <li><span class="inp-marg"> Année de première inscription :</span> <input  type="date"></li>
                 </ul>
             </li>
             <li>Cycle Secondaire
                 <ul style="list-style-type: square;">
-                    <li><em>Lycée SI ELHWAS</em></li>
-                    <li>12/09/2019</li>
-                    <li>BAC: MATH</li>
+                    <li><span class="inp-marg"><em>Lycée :</em></span> <input type="text"></li>
+                    <li><span class="inp-marg"> Année de première inscription :</span> <input  type="date"></li>
+                    <li><span class="inp-marg">BAC:</span> <input type="text"></li>
                 </ul>
             </li>
             <li>Cycle Universitaire
                 <ul style="list-style-type: none;">
-                    <li><em>USTHB</em></li>
-                    <li>4/09/2022</li>
+                    <li><span class="inp-marg"><em>USTHB</em></span> <input type="text"></li>
+                    <li><span class="inp-marg"> Année de première inscription : </span><input  type="date"></li>
                 </ul>
             </li>
         </ol>

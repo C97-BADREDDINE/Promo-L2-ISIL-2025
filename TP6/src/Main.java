@@ -21,7 +21,7 @@ public class Main {
 
         // Affichage des produits
         System.out.println("Liste des produits:");
-        centreCommercial.afficher(centreCommercial.getProduits());
+        //centreCommercial.afficher(centreCommercial.getProduits());
 
         // Création et ajout de commandes
         // Commande du client 1

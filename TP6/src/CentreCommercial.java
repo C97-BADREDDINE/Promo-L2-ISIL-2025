@@ -110,9 +110,9 @@ public class CentreCommercial implements Critere {
         return produits.size();
     }
 
-    public void afficher(ArrayList<?> lists) {
-        for (Object o : lists) {
-            System.out.println(o);
+    public void afficher(ArrayList<Client> clients) {
+        for (Client client : clients) {
+            System.out.println(client);
         }
     }
 
