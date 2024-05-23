@@ -54,7 +54,6 @@ def SelectNode(event):
                     selected_edge = None
                     update_plot()
                     return
-
             for edge in G.edges:
                 (x1, y1), (x2, y2) = pos[edge[0]], pos[edge[1]]
                 if abs((y2 - y1) * x - (x2 - x1) * y + x2 * y1 - y2 * x1) / distance((x1, y1), (x2, y2)) < 0.5:
@@ -66,12 +65,12 @@ def SelectNode(event):
 
 def ondrag(event):
     global selected_node
-    if event.button == 3:  # Right mouse button clicked
-        if event.inaxes and selected_node is not None :
+    if event.button == 3: # Right mouse button clicked
+        if event.inaxes and selected_node is not None:
             x, y = event.xdata, event.ydata
             if x is not None and y is not None:
-                if selected_node in selected_nodes:                    
-                    selected_nodes.remove(selected_node)                    
+                if selected_node in selected_nodes:
+                    selected_nodes.remove(selected_node)
                 G.nodes[selected_node]['pos'] = (x, y)
                 update_plot()
 
@@ -80,12 +79,12 @@ def onrelease(event):
     selected_node = None
 
 def onclick(event):
-    if event.button == 1:  # Left mouse button clicked
+    if event.button == 1: # Left mouse button clicked
         global selected_node, selected_nodes, selected_edge
         if len(selected_nodes) > 0:
             selected_nodes = []
             selected_node = None
-        if event.inaxes:  # Only if the click is within the plot area
+        if event.inaxes: # Only if the click is within the plot area
             x, y = event.xdata, event.ydata
             pos = nx.get_node_attributes(G, 'pos')
             too_close = any(distance((x, y), pos[node]) < 2 for node in pos)
@@ -110,12 +109,20 @@ def connect_nodes():
         weight = random.randint(1, 30)
         if not G.has_edge(node1, node2):
             G.add_edge(node1, node2, weight=weight)
-            update_plot()
+        update_plot()
 
 def update_plot():
     ax.clear()
     pos = nx.get_node_attributes(G, 'pos')
-    node_colors = ["blue" if node in selected_nodes else "red" for node in G.nodes]
+    node_colors = []
+    for node in G.nodes:
+        if G.nodes[node].get('stable_set'):
+            node_colors.append("orange")
+        elif node in selected_nodes:
+            node_colors.append("blue")
+        else:
+            node_colors.append("red")
+    
     edge_colors = ["blue" if edge == selected_edge else "black" for edge in G.edges]
     nx.draw(
         G,
@@ -133,8 +140,8 @@ def update_plot():
     )
     edge_labels = nx.get_edge_attributes(G, 'weight')
     nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=15)
-    ax.set_xlim(-10, 10)  # Set initial x-axis limits
-    ax.set_ylim(-10, 10)  # Set initial y-axis limits
+    ax.set_xlim(-10, 10) # Set initial x-axis limits
+    ax.set_ylim(-10, 10) # Set initial y-axis limits
     canvas.draw()
 
 def find_prim_mst():
@@ -167,6 +174,34 @@ def delete_node():
     selected_nodes = []
     delete_edge()
 
+def welch_powell():
+    global G
+    sorted_nodes = sorted(G.degree, key=lambda x: x[1], reverse=True)
+    node_colors = {}
+    color = 0
+    for node, _ in sorted_nodes:
+        available_colors = {node_colors[n] for n in G.neighbors(node) if n in node_colors}
+        if color not in available_colors:
+            node_colors[node] = color
+        else:
+            color += 1
+            node_colors[node] = color
+
+    nx.set_node_attributes(G, node_colors, 'color')
+    stable_sets = {}
+    for node, color in node_colors.items():
+        if color not in stable_sets:
+            stable_sets[color] = [node]
+        else:
+            stable_sets[color].append(node)
+
+    largest_stable_set = max(stable_sets.values(), key=len)
+    for node in G.nodes:
+        G.nodes[node]['stable_set'] = node in largest_stable_set
+
+    selected_nodes[:] = largest_stable_set
+    update_plot()
+
 update_plot()
 
 fig.canvas.mpl_connect('button_press_event', onclick)
@@ -192,5 +227,8 @@ kruskal_button.pack(side=tk.LEFT)
 
 delete_button = tk.Button(button_frame, text="Delete", command=delete_node, bg="orange", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
 delete_button.pack(side=tk.LEFT)
+
+welch_powell_button = tk.Button(button_frame, text="Welch-Powell", command=welch_powell, bg="yellow", fg="black", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
+welch_powell_button.pack(side=tk.LEFT)
 
 root.mainloop()
