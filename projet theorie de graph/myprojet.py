@@ -25,12 +25,14 @@ coord_label.pack(side=tk.BOTTOM)
 
 selected_node = None
 selected_nodes = []
+selected_edge = None
 
 def clear_all():
-    global selected_node, selected_nodes
+    global selected_node, selected_nodes, selected_edge
     G.clear()
     selected_node = None
     selected_nodes = []
+    selected_edge = None
     update_plot()
 
 def distance(p1, p2):
@@ -38,7 +40,7 @@ def distance(p1, p2):
 
 def SelectNode(event):
     if event.button == 3:
-        global selected_node, selected_nodes
+        global selected_node, selected_nodes, selected_edge
         if event.inaxes:
             x, y = event.xdata, event.ydata
             pos = nx.get_node_attributes(G, 'pos')
@@ -46,11 +48,21 @@ def SelectNode(event):
                 if distance((x, y), pos[node]) < 2:
                     selected_node = node
                     if node not in selected_nodes:
-                        selected_nodes.append(node)  
+                        selected_nodes.append(node)
                     if len(selected_nodes) > 2:
                         selected_nodes.pop(0)
+                    selected_edge = None
                     update_plot()
-                    break
+                    return
+
+            for edge in G.edges:
+                (x1, y1), (x2, y2) = pos[edge[0]], pos[edge[1]]
+                if abs((y2 - y1) * x - (x2 - x1) * y + x2 * y1 - y2 * x1) / distance((x1, y1), (x2, y2)) < 0.5:
+                    selected_edge = edge
+                    selected_node = None
+                    selected_nodes = []
+                    update_plot()
+                    return
 
 def ondrag(event):
     global selected_node
@@ -69,7 +81,7 @@ def onrelease(event):
 
 def onclick(event):
     if event.button == 1:  # Left mouse button clicked
-        global selected_node, selected_nodes
+        global selected_node, selected_nodes, selected_edge
         if len(selected_nodes) > 0:
             selected_nodes = []
             selected_node = None
@@ -80,6 +92,7 @@ def onclick(event):
             if not too_close and selected_node is None:
                 node_label = len(G.nodes) + 1
                 G.add_node(node_label, pos=(x, y))
+                selected_edge = None
                 update_plot()
 
 def onmotion(event):
@@ -103,6 +116,7 @@ def update_plot():
     ax.clear()
     pos = nx.get_node_attributes(G, 'pos')
     node_colors = ["blue" if node in selected_nodes else "red" for node in G.nodes]
+    edge_colors = ["blue" if edge == selected_edge else "black" for edge in G.edges]
     nx.draw(
         G,
         pos=pos,
@@ -114,7 +128,7 @@ def update_plot():
         font_family="Times New Roman",
         font_weight="bold",
         width=5,
-        edge_color="black",
+        edge_color=edge_colors,
         ax=ax
     )
     edge_labels = nx.get_edge_attributes(G, 'weight')
@@ -138,13 +152,20 @@ def update_graph_with_mst(mst):
     nx.set_node_attributes(G, pos, 'pos')
     update_plot()
 
+def delete_edge():
+    global selected_edge
+    if selected_edge is not None:
+        G.remove_edge(*selected_edge)
+        selected_edge = None
+        update_plot()
 
 def delete_node():
     global selected_nodes
     for node in selected_nodes:
         G.remove_node(node)
     update_plot()
-    selected_nodes = []    
+    selected_nodes = []
+    delete_edge()
 
 update_plot()
 
@@ -169,8 +190,7 @@ prim_button.pack(side=tk.LEFT)
 kruskal_button = tk.Button(button_frame, text="Find Kruskal MST", command=find_kruskal_mst, bg="purple", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
 kruskal_button.pack(side=tk.LEFT)
 
-delete_button = tk.Button(button_frame, text="Delete Node", command=delete_node, bg="orange", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
+delete_button = tk.Button(button_frame, text="Delete", command=delete_node, bg="orange", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
 delete_button.pack(side=tk.LEFT)
-
 
 root.mainloop()
