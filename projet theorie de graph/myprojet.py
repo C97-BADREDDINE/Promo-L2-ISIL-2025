@@ -1,10 +1,11 @@
 import random
 import tkinter as tk
-from tkinter import simpledialog
+from tkinter import filedialog, simpledialog
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 import networkx as nx
 import math
+import pickle
 
 root = tk.Tk()
 root.title("Graph Visualization")
@@ -117,7 +118,7 @@ def update_plot():
     node_colors = []
     for node in G.nodes:
         if G.nodes[node].get('stable_set'):
-            node_colors.append("orange")
+            node_colors.append("green")
         elif node in selected_nodes:
             node_colors.append("blue")
         else:
@@ -202,6 +203,32 @@ def welch_powell():
     selected_nodes[:] = largest_stable_set
     update_plot()
 
+def save_graph():
+    file_path = filedialog.asksaveasfilename(defaultextension=".pickle", filetypes=[("Pickle files", "*.pickle"), ("All files", "*.*")])
+    if file_path:
+        print(f"Saving graph to {file_path}")  # Debugging print
+        pos = nx.get_node_attributes(G, 'pos')
+        nx.set_node_attributes(G, pos, 'pos')
+        try:
+            with open(file_path, 'wb') as f:
+                pickle.dump(G, f)
+            print(f"Graph saved successfully to {file_path}")  # Debugging print
+        except Exception as e:
+            print(f"Failed to save graph: {e}")  # Debugging print
+
+def load_graph():
+    global G
+    file_path = filedialog.askopenfilename(filetypes=[("Pickle files", "*.pickle"), ("All files", "*.*")])
+    if file_path:
+        print(f"Loading graph from {file_path}")  # Debugging print
+        try:
+            with open(file_path, 'rb') as f:
+                G = pickle.load(f)
+            update_plot()
+            print(f"Graph loaded successfully from {file_path}")  # Debugging print
+        except Exception as e:
+            print(f"Failed to load graph: {e}")  # Debugging print
+
 update_plot()
 
 fig.canvas.mpl_connect('button_press_event', onclick)
@@ -230,5 +257,11 @@ delete_button.pack(side=tk.LEFT)
 
 welch_powell_button = tk.Button(button_frame, text="Welch-Powell", command=welch_powell, bg="yellow", fg="black", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
 welch_powell_button.pack(side=tk.LEFT)
+
+save_button = tk.Button(button_frame, text="Save Graph", command=save_graph, bg="lightblue", fg="black", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
+save_button.pack(side=tk.LEFT)
+
+load_button = tk.Button(button_frame, text="Load Graph", command=load_graph, bg="lightgreen", fg="black", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
+load_button.pack(side=tk.LEFT)
 
 root.mainloop()
