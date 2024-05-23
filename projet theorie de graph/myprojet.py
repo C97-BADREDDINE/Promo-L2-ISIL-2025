@@ -1,3 +1,4 @@
+import random
 import tkinter as tk
 from tkinter import simpledialog
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -36,29 +37,34 @@ def distance(p1, p2):
     return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
 
 def SelectNode(event):
-    global selected_node, selected_nodes
-    if event.inaxes:
-        x, y = event.xdata, event.ydata
-        pos = nx.get_node_attributes(G, 'pos')
-        for node in pos:
-            if distance((x, y), pos[node]) < 2:
-                selected_node = node
-                if node in selected_nodes :
-                    selected_nodes.remove(node)  
-                elif node not in selected_nodes:
-                    selected_nodes.append(node)  
-                if len(selected_nodes) > 2:
-                    selected_nodes.pop(0)
-                update_plot()
-                break
+    if event.button == 3:
+        global selected_node, selected_nodes
+        if event.inaxes:
+            x, y = event.xdata, event.ydata
+            pos = nx.get_node_attributes(G, 'pos')
+            for node in pos:
+                if distance((x, y), pos[node]) < 2:
+                    selected_node = node
+                    if node not in selected_nodes:
+                        selected_nodes.append(node)  
+                    if len(selected_nodes) > 2:
+                        selected_nodes.pop(0)
+                    update_plot()
+                    break
+
+                
 
 def ondrag(event):
+    
     global selected_node
-    if event.inaxes and selected_node is not None:
-        x, y = event.xdata, event.ydata
-        if x is not None and y is not None:
-            G.nodes[selected_node]['pos'] = (x, y)
-            update_plot()
+    if event.button == 3:  # Right mouse button clicked
+        if event.inaxes and selected_node is not None :
+            x, y = event.xdata, event.ydata
+            if x is not None and y is not None:
+                if selected_node in selected_nodes:                    
+                    selected_nodes.remove(selected_node)                    
+                G.nodes[selected_node]['pos'] = (x, y)
+                update_plot()
 
 def onrelease(event):
     global selected_node
@@ -66,6 +72,10 @@ def onrelease(event):
 
 def onclick(event):
     if event.button == 1:  # Left mouse button clicked
+        global selected_node, selected_nodes
+        if len(selected_nodes) > 0:
+            selected_nodes = []
+            selected_node = None
         if event.inaxes:  # Only if the click is within the plot area
             x, y = event.xdata, event.ydata
             pos = nx.get_node_attributes(G, 'pos')
@@ -82,10 +92,13 @@ def onmotion(event):
             coord_label.config(text=f"Mouse coordinates: x={x:.2f}, y={y:.2f}", font=("Arial", 16), fg="black")
 
 def connect_nodes():
+    global selected_nodes, selected_node
     if len(selected_nodes) == 2:
         node1, node2 = selected_nodes
-        weight = simpledialog.askfloat("Input", f"Enter weight for edge between {node1} and {node2}:")
-        if weight is not None:
+        selected_nodes = []
+        selected_node = None
+        weight = random.randint(1, 30)
+        if not G.has_edge(node1, node2):
             G.add_edge(node1, node2, weight=weight)
             update_plot()
 
