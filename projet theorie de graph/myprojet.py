@@ -43,8 +43,10 @@ def SelectNode(event):
         for node in pos:
             if distance((x, y), pos[node]) < 2:
                 selected_node = node
-                if node not in selected_nodes:
-                    selected_nodes.append(node)
+                if node in selected_nodes :
+                    selected_nodes.remove(node)  
+                elif node not in selected_nodes:
+                    selected_nodes.append(node)  
                 if len(selected_nodes) > 2:
                     selected_nodes.pop(0)
                 update_plot()
