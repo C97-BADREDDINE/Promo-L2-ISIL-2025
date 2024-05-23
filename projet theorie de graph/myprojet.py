@@ -52,10 +52,7 @@ def SelectNode(event):
                     update_plot()
                     break
 
-                
-
 def ondrag(event):
-    
     global selected_node
     if event.button == 3:  # Right mouse button clicked
         if event.inaxes and selected_node is not None :
@@ -126,6 +123,29 @@ def update_plot():
     ax.set_ylim(-10, 10)  # Set initial y-axis limits
     canvas.draw()
 
+def find_prim_mst():
+    mst = nx.minimum_spanning_tree(G, algorithm='prim')
+    update_graph_with_mst(mst)
+
+def find_kruskal_mst():
+    mst = nx.minimum_spanning_tree(G, algorithm='kruskal')
+    update_graph_with_mst(mst)
+
+def update_graph_with_mst(mst):
+    global G
+    pos = nx.get_node_attributes(G, 'pos')
+    G = mst
+    nx.set_node_attributes(G, pos, 'pos')
+    update_plot()
+
+
+def delete_node():
+    global selected_nodes
+    for node in selected_nodes:
+        G.remove_node(node)
+    update_plot()
+    selected_nodes = []    
+
 update_plot()
 
 fig.canvas.mpl_connect('button_press_event', onclick)
@@ -134,10 +154,23 @@ fig.canvas.mpl_connect('button_press_event', SelectNode)
 fig.canvas.mpl_connect('motion_notify_event', ondrag)
 fig.canvas.mpl_connect('button_release_event', onrelease)
 
-clear_button = tk.Button(root, text="Clear All", command=clear_all, bg="red", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
-clear_button.pack(side=tk.BOTTOM)
+button_frame = tk.Frame(root)
+button_frame.pack(side=tk.BOTTOM)
 
-connect_button = tk.Button(root, text="Connect Nodes", command=connect_nodes, bg="green", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
-connect_button.pack(side=tk.BOTTOM)
+clear_button = tk.Button(button_frame, text="Clear All", command=clear_all, bg="red", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
+clear_button.pack(side=tk.LEFT)
+
+connect_button = tk.Button(button_frame, text="Connect Nodes", command=connect_nodes, bg="green", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
+connect_button.pack(side=tk.LEFT)
+
+prim_button = tk.Button(button_frame, text="Find Prim MST", command=find_prim_mst, bg="blue", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
+prim_button.pack(side=tk.LEFT)
+
+kruskal_button = tk.Button(button_frame, text="Find Kruskal MST", command=find_kruskal_mst, bg="purple", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
+kruskal_button.pack(side=tk.LEFT)
+
+delete_button = tk.Button(button_frame, text="Delete Node", command=delete_node, bg="orange", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
+delete_button.pack(side=tk.LEFT)
+
 
 root.mainloop()
