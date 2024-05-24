@@ -7,6 +7,7 @@ import networkx as nx
 import math
 import pickle
 
+
 graph_type = messagebox.askquestion("Graph Type", "Do you want to create a directed graph (Graph Orientée)?", icon='question')
 if graph_type == 'yes':
     G = nx.DiGraph()
@@ -222,9 +223,9 @@ def step_by_step_mst(edges):
     pos = nx.get_node_attributes(G, 'pos')
     mst_edges = []
     for edge in edges:
-        mst_edges.append(edge)
+        mst_edges.append((edge[0], edge[1]))
         ax.clear()
-        edge_colors = ["orange" if e in mst_edges else (128/255, 128/255, 128/255, 0.05) for e in G.edges]
+        edge_colors = ["orange" if (u, v) in mst_edges or (v, u) in mst_edges else (128/255, 128/255, 128/255, 0.05) for u, v in G.edges]
         nx.draw(G, pos, with_labels=True, font_weight="bold", node_color="red", font_color="white", edge_color=edge_colors, node_size=3000, font_size=20, width=5, ax=ax)
         nx.draw_networkx_edge_labels(G, pos, edge_labels=nx.get_edge_attributes(G, 'weight'), font_size=20, font_family="Times New Roman", font_weight="bold", ax=ax)
         canvas.draw()
@@ -232,8 +233,15 @@ def step_by_step_mst(edges):
         root.after(1000)
 
 def find_prim_mst():
-    edges = list(nx.minimum_spanning_edges(G, algorithm='prim', data=False))
-    step_by_step_mst(edges)
+    if nx.is_empty(G):
+        messagebox.showerror("Error", "The graph is empty.")
+        return
+    try:
+        mst = nx.minimum_spanning_tree(G, algorithm='prim')
+        edges = list(mst.edges(data=True))
+        step_by_step_mst(edges)
+    except Exception as e:
+        messagebox.showerror("Error", f"Failed to find MST using Prim's algorithm: {e}")
 
 def find_kruskal_mst():
     edges = list(nx.minimum_spanning_edges(G, algorithm='kruskal', data=False))
