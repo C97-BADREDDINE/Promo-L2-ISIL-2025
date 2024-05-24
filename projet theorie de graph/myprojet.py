@@ -7,6 +7,12 @@ import networkx as nx
 import math
 import pickle
 
+graph_type = messagebox.askquestion("Graph Type", "Do you want to create a directed graph (Graph Orientée)?", icon='question')
+if graph_type == 'yes':
+    G = nx.DiGraph()
+else:
+    G = nx.Graph()
+
 root = tk.Tk()
 root.title("Graph Visualization")
 
@@ -18,12 +24,6 @@ fig, ax = plt.subplots()
 canvas = FigureCanvasTkAgg(fig, master=root)
 canvas_widget = canvas.get_tk_widget()
 canvas_widget.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-
-graph_type = messagebox.askquestion("Graph Type", "Do you want to create a directed graph (Graph Orientée)?", icon='question')
-if graph_type == 'yes':
-    G = nx.DiGraph()
-else:
-    G = nx.Graph()
 
 coord_label = tk.Label(root, text="Mouse coordinates: ")
 coord_label.pack(side=tk.BOTTOM)
@@ -188,13 +188,26 @@ def find_bellman_ford_shortest_path():
             path = nx.single_source_bellman_ford_path(G, start_node)
             update_graph_with_paths(path)
 
+def step_by_step_mst(edges):
+    pos = nx.get_node_attributes(G, 'pos')
+    mst_edges = []
+    for edge in edges:
+        mst_edges.append(edge)
+        ax.clear()
+        edge_colors = ["orange" if e in mst_edges else (128/255, 128/255, 128/255, 0.05) for e in G.edges]
+        nx.draw(G, pos, with_labels=True,font_weight="bold", node_color="red",font_color="white", edge_color=edge_colors, node_size=3000, font_size=20, width=5, ax=ax)
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=nx.get_edge_attributes(G, 'weight'), font_size=20,font_family="Times New Roman",font_weight="bold",ax=ax)
+        canvas.draw()
+        canvas.get_tk_widget().update()
+        root.after(1000)
+
 def find_prim_mst():
-    mst = nx.minimum_spanning_tree(G, algorithm='prim')
-    update_graph_with_mst(mst)
+    edges = list(nx.minimum_spanning_edges(G, algorithm='prim', data=False))
+    step_by_step_mst(edges)
 
 def find_kruskal_mst():
-    mst = nx.minimum_spanning_tree(G, algorithm='kruskal')
-    update_graph_with_mst(mst)
+    edges = list(nx.minimum_spanning_edges(G, algorithm='kruskal', data=False))
+    step_by_step_mst(edges)
 
 def update_graph_with_paths(paths):
     global G
@@ -206,13 +219,6 @@ def update_graph_with_paths(paths):
                 new_graph.add_edge(path[i], path[i+1], weight=G[path[i]][path[i+1]]['weight'])
     nx.set_node_attributes(new_graph, pos, 'pos')
     G = new_graph
-    update_plot()
-
-def update_graph_with_mst(mst):
-    global G
-    pos = nx.get_node_attributes(G, 'pos')
-    G = mst
-    nx.set_node_attributes(G, pos, 'pos')
     update_plot()
 
 def delete_edge():
@@ -237,12 +243,10 @@ def welch_powell():
     color = 0
     for node, _ in sorted_nodes:
         available_colors = {node_colors[n] for n in G.neighbors(node) if n in node_colors}
-        if color not in available_colors:
-            node_colors[node] = color
-        else:
+        while color in available_colors:
             color += 1
-            node_colors[node] = color
-
+        node_colors[node] = color
+    
     nx.set_node_attributes(G, node_colors, 'color')
     stable_sets = {}
     for node, color in node_colors.items():
@@ -250,7 +254,7 @@ def welch_powell():
             stable_sets[color] = [node]
         else:
             stable_sets[color].append(node)
-
+    
     largest_stable_set = max(stable_sets.values(), key=len)
     for node in G.nodes:
         G.nodes[node]['stable_set'] = node in largest_stable_set
@@ -261,45 +265,41 @@ def welch_powell():
 def save_graph():
     file_path = filedialog.asksaveasfilename(defaultextension=".pickle", filetypes=[("Pickle files", "*.pickle"), ("All files", "*.*")])
     if file_path:
-        print(f"Saving graph to {file_path}")  # Debugging print
         pos = nx.get_node_attributes(G, 'pos')
         nx.set_node_attributes(G, pos, 'pos')
         try:
             with open(file_path, 'wb') as f:
                 pickle.dump(G, f)
-            print(f"Graph saved successfully to {file_path}")  # Debugging print
         except Exception as e:
-            print(f"Failed to save graph: {e}")  # Debugging print
+            messagebox.showerror("Save Error", f"Failed to save graph: {e}")
 
 def load_graph():
     global G
     file_path = filedialog.askopenfilename(filetypes=[("Pickle files", "*.pickle"), ("All files", "*.*")])
     if file_path:
-        print(f"Loading graph from {file_path}")  # Debugging print
         try:
             with open(file_path, 'rb') as f:
                 G = pickle.load(f)
             update_plot()
-            print(f"Graph loaded successfully from {file_path}")  # Debugging print
         except Exception as e:
-            print(f"Failed to load graph: {e}")  # Debugging print
+            messagebox.showerror("Load Error", f"Failed to load graph: {e}")
 
 update_plot()
 
 my_menu = Menu(root)
 root.config(menu=my_menu)
 
-#Create a menu item
+# Create a menu item
 
-file_menu = Menu(my_menu,tearoff=False)
+file_menu = Menu(my_menu, tearoff=False)
 my_menu.add_cascade(label="File", menu=file_menu)
-file_menu. add_command (label="Save", command=save_graph)
+file_menu.add_command(label="Save", command=save_graph)
 file_menu.add_separator()
-file_menu. add_command (label="Open File", command=load_graph)
+file_menu.add_command(label="Open File", command=load_graph)
 file_menu.add_separator()
-file_menu. add_command(label="Exit", command=root.quit)
+file_menu.add_command(label="Exit", command=root.quit)
 file_menu.configure(font=("Arial", 16))
-my_menu.configure(font=("Arial", 16), bg="white", fg="black", activebackground="black", activeforeground="white", relief=tk.RAISED, bd=5, cursor="hand2",borderwidth=5)
+my_menu.configure(font=("Arial", 16), bg="white", fg="black", activebackground="black", activeforeground="white", relief=tk.RAISED, bd=5, cursor="hand2", borderwidth=5)
 
 fig.canvas.mpl_connect('button_press_event', onclick)
 fig.canvas.mpl_connect('motion_notify_event', onmotion)
