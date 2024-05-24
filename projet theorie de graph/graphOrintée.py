@@ -1,6 +1,7 @@
 import random
 import tkinter as tk
-from tkinter import Menu, filedialog, simpledialog, messagebox
+from tkinter import Menu, filedialog
+from tkinter import simpledialog
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 import networkx as nx
@@ -8,7 +9,7 @@ import math
 import pickle
 
 root = tk.Tk()
-root.title("Graph Visualization")
+root.title("Directed Graph Visualization")
 
 x = root.winfo_screenwidth() // 2
 y = root.winfo_screenheight() // 2
@@ -19,11 +20,7 @@ canvas = FigureCanvasTkAgg(fig, master=root)
 canvas_widget = canvas.get_tk_widget()
 canvas_widget.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
-graph_type = messagebox.askquestion("Graph Type", "Do you want to create a directed graph (Graph Orientée)?", icon='question')
-if graph_type == 'yes':
-    G = nx.DiGraph()
-else:
-    G = nx.Graph()
+G = nx.DiGraph()
 
 coord_label = tk.Label(root, text="Mouse coordinates: ")
 coord_label.pack(side=tk.BOTTOM)
@@ -126,52 +123,34 @@ def update_plot():
     node_colors = []
     for node in G.nodes:
         if G.nodes[node].get('stable_set'):
-            node_colors.append("orange")
+            node_colors.append("green")
         elif node in selected_nodes:
             node_colors.append("blue")
         else:
             node_colors.append("red")
     
     edge_colors = ["blue" if edge == selected_edge else "black" for edge in G.edges]
-    
-    if graph_type == 'yes':
-        nx.draw(
-            G,
-            pos=pos,
-            with_labels=True,
-            node_color=node_colors,
-            node_size=3000,
-            font_color="white",
-            font_size=20,
-            font_family="Times New Roman",
-            font_weight="bold",
-            width=5,
-            edge_color=edge_colors,
-            ax=ax,
-            arrows=True,
-            arrowstyle='-|>'
-        )
-    else:
-        nx.draw(
-            G,
-            pos=pos,
-            with_labels=True,
-            node_color=node_colors,
-            node_size=3000,
-            font_color="white",
-            font_size=20,
-            font_family="Times New Roman",
-            font_weight="bold",
-            width=5,
-            edge_color=edge_colors,
-            ax=ax,
-            arrows=False  # Ensure arrows are disabled for undirected graphs
-        )
-    
+    nx.draw(
+        G,
+        pos=pos,
+        with_labels=True,
+        node_color=node_colors,
+        node_size=3000,
+        font_color="white",
+        font_size=20,
+        font_family="Times New Roman",
+        font_weight="bold",
+        width=5,
+        edge_color=edge_colors,
+        ax=ax,
+        arrows=True,
+        arrowstyle='-|>',
+        arrowsize=20
+    )
     edge_labels = nx.get_edge_attributes(G, 'weight')
     nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=15)
-    ax.set_xlim(-10, 10)  # Set initial x-axis limits
-    ax.set_ylim(-10, 10)  # Set initial y-axis limits
+    ax.set_xlim(-10, 10) # Set initial x-axis limits
+    ax.set_ylim(-10, 10) # Set initial y-axis limits
     canvas.draw()
 
 def find_dijkstra_shortest_path():
@@ -188,17 +167,9 @@ def find_bellman_ford_shortest_path():
             path = nx.single_source_bellman_ford_path(G, start_node)
             update_graph_with_paths(path)
 
-def find_prim_mst():
-    mst = nx.minimum_spanning_tree(G, algorithm='prim')
-    update_graph_with_mst(mst)
-
-def find_kruskal_mst():
-    mst = nx.minimum_spanning_tree(G, algorithm='kruskal')
-    update_graph_with_mst(mst)
-
 def update_graph_with_paths(paths):
     global G
-    new_graph = nx.DiGraph() if graph_type == 'yes' else nx.Graph()
+    new_graph = nx.DiGraph()
     pos = nx.get_node_attributes(G, 'pos')
     for node, path in paths.items():
         if len(path) > 1:
@@ -206,13 +177,6 @@ def update_graph_with_paths(paths):
                 new_graph.add_edge(path[i], path[i+1], weight=G[path[i]][path[i+1]]['weight'])
     nx.set_node_attributes(new_graph, pos, 'pos')
     G = new_graph
-    update_plot()
-
-def update_graph_with_mst(mst):
-    global G
-    pos = nx.get_node_attributes(G, 'pos')
-    G = mst
-    nx.set_node_attributes(G, pos, 'pos')
     update_plot()
 
 def delete_edge():
@@ -261,28 +225,24 @@ def welch_powell():
 def save_graph():
     file_path = filedialog.asksaveasfilename(defaultextension=".pickle", filetypes=[("Pickle files", "*.pickle"), ("All files", "*.*")])
     if file_path:
-        print(f"Saving graph to {file_path}")  # Debugging print
         pos = nx.get_node_attributes(G, 'pos')
         nx.set_node_attributes(G, pos, 'pos')
         try:
             with open(file_path, 'wb') as f:
                 pickle.dump(G, f)
-            print(f"Graph saved successfully to {file_path}")  # Debugging print
         except Exception as e:
-            print(f"Failed to save graph: {e}")  # Debugging print
+            print(f"Failed to save graph: {e}")
 
 def load_graph():
     global G
     file_path = filedialog.askopenfilename(filetypes=[("Pickle files", "*.pickle"), ("All files", "*.*")])
     if file_path:
-        print(f"Loading graph from {file_path}")  # Debugging print
         try:
             with open(file_path, 'rb') as f:
                 G = pickle.load(f)
             update_plot()
-            print(f"Graph loaded successfully from {file_path}")  # Debugging print
         except Exception as e:
-            print(f"Failed to load graph: {e}")  # Debugging print
+            print(f"Failed to load graph: {e}")
 
 update_plot()
 
@@ -317,18 +277,11 @@ clear_button.pack(side=tk.LEFT)
 connect_button = tk.Button(button_frame, text="Connect Nodes", command=connect_nodes, bg="green", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
 connect_button.pack(side=tk.LEFT)
 
-if graph_type == 'yes':
-    dijkstra_button = tk.Button(button_frame, text="Find Dijkstra SP", command=find_dijkstra_shortest_path, bg="blue", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
-    dijkstra_button.pack(side=tk.LEFT)
+dijkstra_button = tk.Button(button_frame, text="Find Dijkstra SP", command=find_dijkstra_shortest_path, bg="blue", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
+dijkstra_button.pack(side=tk.LEFT)
 
-    bellman_ford_button = tk.Button(button_frame, text="Find Bellman-Ford SP", command=find_bellman_ford_shortest_path, bg="purple", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
-    bellman_ford_button.pack(side=tk.LEFT)
-else:
-    prim_button = tk.Button(button_frame, text="Find Prim MST", command=find_prim_mst, bg="blue", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
-    prim_button.pack(side=tk.LEFT)
-
-    kruskal_button = tk.Button(button_frame, text="Find Kruskal MST", command=find_kruskal_mst, bg="purple", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
-    kruskal_button.pack(side=tk.LEFT)
+bellman_ford_button = tk.Button(button_frame, text="Find Bellman-Ford SP", command=find_bellman_ford_shortest_path, bg="purple", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
+bellman_ford_button.pack(side=tk.LEFT)
 
 delete_button = tk.Button(button_frame, text="Delete", command=delete_node, bg="orange", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
 delete_button.pack(side=tk.LEFT)
