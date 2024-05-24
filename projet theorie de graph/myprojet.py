@@ -247,6 +247,16 @@ def find_kruskal_mst():
     edges = list(nx.minimum_spanning_edges(G, algorithm='kruskal', data=False))
     step_by_step_mst(edges)
 
+def find_maximum_spanning_tree():
+    if G.number_of_edges() > 0:
+        inverted_G = G.copy()
+        for u, v, d in inverted_G.edges(data=True):
+            d['weight'] = -d['weight']
+        mst_edges = nx.minimum_spanning_edges(inverted_G, algorithm='kruskal', data=False)
+        original_edges = [(u, v, -data['weight']) for u, v in mst_edges for data in [inverted_G.get_edge_data(u, v)]]
+        step_by_step_mst(original_edges)
+
+
 def update_graph_with_paths(paths):
     global G
     new_graph = nx.DiGraph() if graph_type == 'yes' else nx.Graph()
@@ -381,6 +391,9 @@ else:
 
     kruskal_button = tk.Button(button_frame, text="Find Kruskal MST", command=find_kruskal_mst, bg="purple", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
     kruskal_button.pack(side=tk.LEFT)
+
+    Maximam_spanning_tree_button = tk.Button(button_frame, text="Maximam Spanning Tree", command=find_maximum_spanning_tree, bg="purple", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
+    Maximam_spanning_tree_button.pack(side=tk.LEFT)
 
 delete_button = tk.Button(button_frame, text="Delete", command=delete_node, bg="orange", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
 delete_button.pack(side=tk.LEFT)
