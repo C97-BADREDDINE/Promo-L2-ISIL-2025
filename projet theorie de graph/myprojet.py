@@ -1,6 +1,6 @@
 import random
 import tkinter as tk
-from tkinter import filedialog, simpledialog
+from tkinter import Menu, filedialog, simpledialog
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 import networkx as nx
@@ -111,6 +111,10 @@ def connect_nodes():
         if not G.has_edge(node1, node2):
             G.add_edge(node1, node2, weight=weight)
         update_plot()
+
+def connect_node(event):
+    if (event.button == 2):
+        connect_nodes()
 
 def update_plot():
     ax.clear()
@@ -231,11 +235,27 @@ def load_graph():
 
 update_plot()
 
+my_menu = Menu(root)
+root.config(menu=my_menu)
+
+#Create a menu item
+
+file_menu = Menu(my_menu,tearoff=False)
+my_menu.add_cascade(label="File", menu=file_menu)
+file_menu. add_command (label="Save", command=save_graph)
+file_menu.add_separator()
+file_menu. add_command (label="Open File", command=load_graph)
+file_menu.add_separator()
+file_menu. add_command(label="Exit", command=root.quit)
+file_menu.configure(font=("Arial", 16))
+my_menu.configure(font=("Arial", 16), bg="white", fg="black", activebackground="black", activeforeground="white", relief=tk.RAISED, bd=5, cursor="hand2",borderwidth=5)
+
 fig.canvas.mpl_connect('button_press_event', onclick)
 fig.canvas.mpl_connect('motion_notify_event', onmotion)
 fig.canvas.mpl_connect('button_press_event', SelectNode)
 fig.canvas.mpl_connect('motion_notify_event', ondrag)
 fig.canvas.mpl_connect('button_release_event', onrelease)
+fig.canvas.mpl_connect('button_press_event', connect_node)
 
 button_frame = tk.Frame(root)
 button_frame.pack(side=tk.BOTTOM)
@@ -257,11 +277,5 @@ delete_button.pack(side=tk.LEFT)
 
 welch_powell_button = tk.Button(button_frame, text="Welch-Powell", command=welch_powell, bg="yellow", fg="black", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
 welch_powell_button.pack(side=tk.LEFT)
-
-save_button = tk.Button(button_frame, text="Save Graph", command=save_graph, bg="lightblue", fg="black", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
-save_button.pack(side=tk.LEFT)
-
-load_button = tk.Button(button_frame, text="Load Graph", command=load_graph, bg="lightgreen", fg="black", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
-load_button.pack(side=tk.LEFT)
 
 root.mainloop()
