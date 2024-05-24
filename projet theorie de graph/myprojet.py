@@ -129,6 +129,10 @@ def update_plot():
             node_colors.append("orange")
         elif node in selected_nodes:
             node_colors.append("blue")
+        elif 'color' in G.nodes[node]:  # Check if the node has a 'color' attribute
+            color_index = G.nodes[node]['color']
+            color_list = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'pink', 'cyan', 'magenta', 'lime']
+            node_colors.append(color_list[color_index % len(color_list)])  # Assign a color from the list
         else:
             node_colors.append("red")
     
@@ -262,31 +266,45 @@ def delete_node():
     selected_nodes = []
     delete_edge()
 
-def welch_powell():
+def welsh_powell():
     global G
-    sorted_nodes = sorted(G.degree, key=lambda x: x[1], reverse=True)
-    node_colors = {}
-    color = 0
-    for node, _ in sorted_nodes:
-        available_colors = {node_colors[n] for n in G.neighbors(node) if n in node_colors}
-        while color in available_colors:
-            color += 1
-        node_colors[node] = color
+    # Sort vertices by decreasing degree
+    sorted_vertices = sorted(G.nodes(), key=lambda x: G.degree(x), reverse=True)
     
-    nx.set_node_attributes(G, node_colors, 'color')
-    stable_sets = {}
-    for node, color in node_colors.items():
-        if color not in stable_sets:
-            stable_sets[color] = [node]
-        else:
-            stable_sets[color].append(node)
+    # Initialize the color assignment dictionary
+    color_assignment = {}
     
-    largest_stable_set = max(stable_sets.values(), key=len)
-    for node in G.nodes:
-        G.nodes[node]['stable_set'] = node in largest_stable_set
-
-    selected_nodes[:] = largest_stable_set
+    # Initialize the first color
+    current_color = 0
+    
+    for vertex in sorted_vertices:
+        # If the vertex is already colored, continue to the next one
+        if vertex in color_assignment:
+            continue
+        
+        # Assign the current color to the vertex
+        color_assignment[vertex] = current_color
+        
+        # Assign the current color to all possible vertices
+        for neighbor in sorted_vertices:
+            if neighbor not in color_assignment:
+                # Check if the neighbor can be colored with the current color
+                can_color = True
+                for adjacent in G.neighbors(neighbor):
+                    if adjacent in color_assignment and color_assignment[adjacent] == current_color:
+                        can_color = False
+                        break
+                if can_color:
+                    color_assignment[neighbor] = current_color
+        
+        # Move to the next color
+        current_color += 1
+    
+    # Update the graph with color assignments
+    nx.set_node_attributes(G, color_assignment, 'color')
+    
     update_plot()
+    return color_assignment
 
 def save_graph():
     file_path = filedialog.asksaveasfilename(defaultextension=".pickle", filetypes=[("Pickle files", "*.pickle"), ("All files", "*.*")])
@@ -359,7 +377,7 @@ else:
 delete_button = tk.Button(button_frame, text="Delete", command=delete_node, bg="orange", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
 delete_button.pack(side=tk.LEFT)
 
-welch_powell_button = tk.Button(button_frame, text="Welch-Powell", command=welch_powell, bg="yellow", fg="black", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
+welch_powell_button = tk.Button(button_frame, text="Welch-Powell", command=welsh_powell, bg="yellow", fg="black", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
 welch_powell_button.pack(side=tk.LEFT)
 
 root.mainloop()
