@@ -178,15 +178,41 @@ def find_dijkstra_shortest_path():
     if G.number_of_nodes() > 0:
         start_node = simpledialog.askinteger("Input", "Enter the starting node:")
         if start_node in G.nodes:
-            path = nx.single_source_dijkstra_path(G, start_node)
-            update_graph_with_paths(path)
+            step_by_step_shortest_path(nx.single_source_dijkstra, start_node)
 
 def find_bellman_ford_shortest_path():
     if G.number_of_nodes() > 0:
         start_node = simpledialog.askinteger("Input", "Enter the starting node:")
         if start_node in G.nodes:
-            path = nx.single_source_bellman_ford_path(G, start_node)
-            update_graph_with_paths(path)
+            step_by_step_shortest_path(nx.single_source_bellman_ford, start_node)
+
+def step_by_step_shortest_path(algorithm, start_node):
+    pos = nx.get_node_attributes(G, 'pos')
+    edges_in_path = set()
+    paths = {}
+
+    def update_edges_colors():
+        edge_colors = []
+        for edge in G.edges:
+            if edge in edges_in_path or (edge[1], edge[0]) in edges_in_path:
+                edge_colors.append("orange")
+            else:
+                edge_colors.append((128/255, 128/255, 128/255, 0.05))
+        return edge_colors
+
+    for target_node in G.nodes:
+        if target_node == start_node:
+            continue
+        _, path = algorithm(G, start_node, target_node)
+        for i in range(len(path) - 1):
+            edges_in_path.add((path[i], path[i+1]))
+            edge_colors = update_edges_colors()
+            ax.clear()
+            nx.draw(G, pos, with_labels=True, font_weight="bold", node_color="red", font_color="white", edge_color=edge_colors, node_size=3000, font_size=20, width=5, ax=ax)
+            nx.draw_networkx_edge_labels(G, pos, edge_labels=nx.get_edge_attributes(G, 'weight'), font_size=20, font_family="Times New Roman", font_weight="bold", ax=ax)
+            canvas.draw()
+            canvas.get_tk_widget().update()
+            root.after(1000)
 
 def step_by_step_mst(edges):
     pos = nx.get_node_attributes(G, 'pos')
@@ -195,8 +221,8 @@ def step_by_step_mst(edges):
         mst_edges.append(edge)
         ax.clear()
         edge_colors = ["orange" if e in mst_edges else (128/255, 128/255, 128/255, 0.05) for e in G.edges]
-        nx.draw(G, pos, with_labels=True,font_weight="bold", node_color="red",font_color="white", edge_color=edge_colors, node_size=3000, font_size=20, width=5, ax=ax)
-        nx.draw_networkx_edge_labels(G, pos, edge_labels=nx.get_edge_attributes(G, 'weight'), font_size=20,font_family="Times New Roman",font_weight="bold",ax=ax)
+        nx.draw(G, pos, with_labels=True, font_weight="bold", node_color="red", font_color="white", edge_color=edge_colors, node_size=3000, font_size=20, width=5, ax=ax)
+        nx.draw_networkx_edge_labels(G, pos, edge_labels=nx.get_edge_attributes(G, 'weight'), font_size=20, font_family="Times New Roman", font_weight="bold", ax=ax)
         canvas.draw()
         canvas.get_tk_widget().update()
         root.after(1000)
@@ -318,10 +344,10 @@ connect_button = tk.Button(button_frame, text="Connect Nodes", command=connect_n
 connect_button.pack(side=tk.LEFT)
 
 if graph_type == 'yes':
-    dijkstra_button = tk.Button(button_frame, text="Find Dijkstra SP", command=find_dijkstra_shortest_path, bg="blue", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
+    dijkstra_button = tk.Button(button_frame, text="Dijkstra SP", command=find_dijkstra_shortest_path, bg="blue", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
     dijkstra_button.pack(side=tk.LEFT)
 
-    bellman_ford_button = tk.Button(button_frame, text="Find Bellman-Ford SP", command=find_bellman_ford_shortest_path, bg="purple", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
+    bellman_ford_button = tk.Button(button_frame, text="Bellman-Ford", command=find_bellman_ford_shortest_path, bg="purple", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
     bellman_ford_button.pack(side=tk.LEFT)
 else:
     prim_button = tk.Button(button_frame, text="Find Prim MST", command=find_prim_mst, bg="blue", fg="white", font=("Arial", 16), relief=tk.RAISED, bd=5, activebackground="black", activeforeground="white", width=15, height=2, anchor="center", justify="center", cursor="hand2")
