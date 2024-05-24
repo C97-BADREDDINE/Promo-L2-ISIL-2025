@@ -150,7 +150,7 @@ def update_plot():
             font_size=20,
             font_family="Times New Roman",
             font_weight="bold",
-            width=5,
+            width=3,
             edge_color=edge_colors,
             ax=ax,
             arrows=True,
@@ -213,7 +213,7 @@ def step_by_step_shortest_path(algorithm, start_node):
             edges_in_path.add((path[i], path[i+1]))
             edge_colors = update_edges_colors()
             ax.clear()
-            nx.draw(G, pos, with_labels=True, font_weight="bold", node_color="red", font_color="white", edge_color=edge_colors, node_size=3000, font_size=20, width=5, ax=ax)
+            nx.draw(G, pos, with_labels=True, font_weight="bold", node_color="red", font_color="white", edge_color=edge_colors, node_size=3000, font_size=20, width=3, ax=ax)
             nx.draw_networkx_edge_labels(G, pos, edge_labels=nx.get_edge_attributes(G, 'weight'), font_size=20, font_family="Times New Roman", font_weight="bold", ax=ax)
             canvas.draw()
             canvas.get_tk_widget().update()
