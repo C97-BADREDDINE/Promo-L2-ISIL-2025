@@ -1,5 +1,36 @@
-/TP6/nbproject/private/
-/TP6/build/
-/TP1GL2/nbproject/private/
-/GL2TP1/nbproject/private/
-/GL2TP1/build/
+# NetBeans specific
+**/nbproject/private/
+**/build/
+**/nbbuild/
+**/dist/
+**/nbdist/
+**/.nb-gradle/
+
+# Java compiled class files
+*.class
+
+# Package Files
+*.jar
+*.war
+*.ear
+
+# IDE specific files
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Logs
+*.log
+
+# Temporary files
+*~
+*.swp
+*.tmp
