@@ -47,7 +47,7 @@ Exercices de développement web avec HTML, CSS et JavaScript.
 
 ### Théorie des Graphes (Graph Theory)
 
-#### Projet Théorie de Graphe
+#### Projet Théorie des Graphes
 Application Python interactive pour la visualisation et la manipulation de graphes.
 - **Langage**: Python
 - **Bibliothèques**: 
